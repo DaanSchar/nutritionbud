@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "nutritionbud",
+    "slug": "nutritionbud",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "nutritionbud"
+}
