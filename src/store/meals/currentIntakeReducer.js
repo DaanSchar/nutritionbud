@@ -1,6 +1,12 @@
-import { intakeData } from "../../../assets/data/intakeData";
-
-const initialState = intakeData
+const initialState = {
+  macros: {
+    totalCalories: 0,
+    totalProtein: 0,
+    totalFat: 0,
+    totalCarbohydrates: 0,
+  },
+  meals: []
+}
 
 export const currentIntakeReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -8,8 +14,31 @@ export const currentIntakeReducer = (state = initialState, action) => {
       return addMeal(state, action);
     case 'DELETE_MEAL':
       return deleteMeal(state, action);
+    case 'SET_MEALS':
+      return setMeals(state, action);
+    case 'SET_MACROS':
+      return setMacros(state, action);
   }
   return state;
+}
+
+function setMacros(state, action) {
+  let macros = action.data
+  console.log(macros)
+
+
+  return {
+    ...state,
+    macros: {...macros}
+  }
+}
+
+
+function setMeals(state, action) {
+  return {
+    ...state,
+    meals: [...action.data]
+  }
 }
 
 function addMeal(state, action) {
@@ -27,10 +56,6 @@ function addMeal(state, action) {
 
   return {
     ...state,
-    totalCalories: state.totalCalories + newMeal.meal.calories * newMeal.portionSize,
-    totalProtein: state.totalProtein + newMeal.meal.protein * newMeal.portionSize,
-    totalFat: state.totalFat + newMeal.meal.fat * newMeal.portionSize,
-    totalCarbohydrates: state.totalCarbohydrates + newMeal.meal.carbohydrates * newMeal.portionSize,
     meals: meals,
   }
 }
@@ -51,8 +76,10 @@ function deleteMeal(state, action) {
 
   let mealIndex;
 
+  console.log(action.meal)
+
   for (let i = 0; i < state.meals.length; i++) {
-    if (state.meals[i].id === action.id) {
+    if (mealsAreTheSame(state.meals[i], action.meal)) {
       mealIndex = i;
       break;
     }
@@ -61,18 +88,28 @@ function deleteMeal(state, action) {
   let meal = state.meals[mealIndex];
   state.meals.splice(mealIndex, 1)
 
+  let macros = {
+    totalCalories: state.macros.totalCalories - meal.meal.calories * meal.portionSize,
+    totalProtein: state.macros.totalProtein - meal.meal.protein * meal.portionSize,
+    totalFat: state.macros.totalFat - meal.meal.fat * meal.portionSize,
+    totalCarbohydrates: state.macros.totalCarbohydrates - meal.meal.carbohydrates * meal.portionSize,
+  }
+
   return {
     ...state,
-    totalCalories: state.totalCalories - meal.meal.calories * meal.portionSize,
-    totalProtein: state.totalProtein - meal.meal.protein * meal.portionSize,
-    totalFat: state.totalFat - meal.meal.fat * meal.portionSize,
-    totalCarbohydrates: state.totalCarbohydrates - meal.meal.carbohydrates * meal.portionSize,
+    macros: {...macros },
     meals: [...state.meals],
   }
 
-
-
   return state;
+}
+
+function mealsAreTheSame(mealA, mealB) {
+  if (mealA.meal.id === mealB.meal.id)
+    if (mealA.portionSize === mealB.portionSize)
+      if (mealA.date === mealB.date)
+        return true
+  return false
 }
 
 

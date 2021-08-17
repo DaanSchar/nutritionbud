@@ -7,14 +7,18 @@
     "start": "react-native start"
   },
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.0.4",
     "@react-navigation/stack": "^6.0.3",
     "expo": "~42.0.1",
+    "expo-barcode-scanner": "~10.2.2",
     "expo-splash-screen": "~0.11.2",
     "expo-status-bar": "~1.0.4",
     "expo-updates": "~0.8.2",
+    "punycode": "^2.1.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "0.63.4",
+    "react-native-dropdown-picker": "^5.1.23",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-reanimated": "~2.2.0",
     "react-native-safe-area-context": "3.2.0",
