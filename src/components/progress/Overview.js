@@ -1,12 +1,14 @@
 import {Text, View, StyleSheet} from "react-native";
 import React from 'react';
 import {color} from "../../../assets/color/color";
+import Chart from "./components/Chart";
 
 const Overview = () => {
-    return (
-        <View style={{ flex: 1, }}>
-            <View style={styles.contentContainer}>
 
+    return (
+        <View>
+            <View>
+                <Chart/>
             </View>
         </View>
     )
