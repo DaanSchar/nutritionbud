@@ -59,41 +59,41 @@ const Overview = ({ navigation, meals, setMacros, totalCalories, totalProtein, t
     {/* Menu */}
     <StatusBar translucent={true} backgroundColor={'transparent'} />
 
-    <LinearGradient
-        colors={[color.primary, color.two]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 3, y: 0 }}
-        style={styles.topContainer}>
+      <LinearGradient
+          colors={[color.primary, color.two]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 3, y: 0 }}
+          style={styles.topContainer}>
 
-      <View style={styles.topContent}>
+        <View style={styles.topContent}>
 
-        <View style={{}}>
-          <Text style={styles.title}>Today's Total Intake</Text>
-          <Text style={styles.calorieTitle}>{parseInt(totalCalories)} Kcal</Text>
+          <View style={{}}>
+            <Text style={styles.title}>Today's Total Intake</Text>
+            <Text style={styles.calorieTitle}>{parseInt(totalCalories)} Kcal</Text>
+          </View>
+
         </View>
+      </LinearGradient>
 
-      </View>
-    </LinearGradient>
+      {/* Content */}
+      <View style={styles.container}>
 
-    {/* Content */}
-    <View style={styles.container}>
+        {/* Nutrition */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          alwaysBounceHorizontal={true}
+          style={styles.cardContainer}>
+          <NutritionCard type={'Protein'} total={parseInt(totalProtein)} index={1}/>
+          <NutritionCard type={'Fat'} total={parseInt(totalFat)} index={2}/>
+          <NutritionCard type={'Carbs'} total={parseInt(totalCarbohydrates)} index={3}/>
+        </ScrollView>
 
-      {/* Nutrition */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        alwaysBounceHorizontal={true}
-        style={styles.cardContainer}>
-        <NutritionCard type={'Protein'} total={parseInt(totalProtein)} index={1}/>
-        <NutritionCard type={'Fat'} total={parseInt(totalFat)} index={2}/>
-        <NutritionCard type={'Carbs'} total={parseInt(totalCarbohydrates)} index={3}/>
-      </ScrollView>
+        <View style={styles.bottomContainer}>
 
-      <View style={styles.bottomContainer}>
+          <Text style={styles.bottomTitle}>Today's Meals</Text>
 
-        <Text style={styles.bottomTitle}>Today's Meals</Text>
-
-        <View style={styles.bottomContent}>
+          <View style={styles.bottomContent}>
           {
             meals.map(item => (
                 <View key={item.id}>
