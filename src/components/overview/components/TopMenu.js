@@ -1,4 +1,4 @@
-import { color } from "../../../../../assets/color/color";
+import { color } from "../../../../assets/color/color";
 import { View, StyleSheet } from "react-native";
 import React from 'react';
 

@@ -1,12 +1,12 @@
 import { Text, View, StyleSheet, TouchableOpacity, Animated} from "react-native";
-import { color } from "../../../../../assets/color/color";
+import { color } from "../../../../assets/color/color";
 import { Swipeable } from "react-native-gesture-handler";
 import React from "react";
 import MealCard from "../../addmeal/components/MealCard";
 import Feather from "react-native-vector-icons/Feather";
 import { connect } from "react-redux";
-import * as currentIntakeActions from "../../../../store/meals/currentIntakeActions";
-import * as mealApiService from "../../../../services/mealApiService";
+import * as currentIntakeActions from "../../../store/meals/currentIntakeActions";
+import * as mealApiService from "../../../services/mealApiService";
 
 const SwipeableMealCard = ({ item, deleteMeal }) => {
 

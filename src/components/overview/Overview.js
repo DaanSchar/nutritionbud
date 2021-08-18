@@ -8,15 +8,15 @@ import {
   TouchableOpacity, FlatList, ActivityIndicator,
 } from "react-native";
 import React, {useEffect, useState} from 'react';
-import { color } from "../../../../assets/color/color";
+import { color } from "../../../assets/color/color";
 import LinearGradient from "react-native-linear-gradient";
 import NutritionCard from "./components/NutritionCard";
 import SwipeableMealCard from "./components/SwipeableMealCard";
 import { connect } from "react-redux";
-import * as mealApiService from "../../../services/mealApiService";
+import * as mealApiService from "../../services/mealApiService";
 import {useIsFocused} from "@react-navigation/native";
-import * as currentIntakeActions from "../../../store/meals/currentIntakeActions";
-import {getMacros} from "../../../services/mealApiService";
+import * as currentIntakeActions from "../../store/meals/currentIntakeActions";
+import {getMacros} from "../../services/mealApiService";
 
 
 const Overview = ({ navigation, meals, setMacros, totalCalories, totalProtein, totalFat, totalCarbohydrates, setMeals}) => {
@@ -59,7 +59,11 @@ const Overview = ({ navigation, meals, setMacros, totalCalories, totalProtein, t
     {/* Menu */}
     <StatusBar translucent={true} backgroundColor={'transparent'} />
 
-    <LinearGradient colors={[color.primary, color.two]} style={styles.topContainer}>
+    <LinearGradient
+        colors={[color.primary, color.two]}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 3, y: 0 }}
+        style={styles.topContainer}>
 
       <View style={styles.topContent}>
 
@@ -80,16 +84,10 @@ const Overview = ({ navigation, meals, setMacros, totalCalories, totalProtein, t
         showsHorizontalScrollIndicator={false}
         alwaysBounceHorizontal={true}
         style={styles.cardContainer}>
-        <NutritionCard type={'Protein'} total={parseInt(totalProtein)} icon={'set-meal'}/>
-        <NutritionCard type={'Fat'} total={parseInt(totalFat)} icon={'fastfood'}/>
-        <NutritionCard type={'Carbs'} total={parseInt(totalCarbohydrates)} icon={'rice-bowl'}/>
+        <NutritionCard type={'Protein'} total={parseInt(totalProtein)} index={1}/>
+        <NutritionCard type={'Fat'} total={parseInt(totalFat)} index={2}/>
+        <NutritionCard type={'Carbs'} total={parseInt(totalCarbohydrates)} index={3}/>
       </ScrollView>
-
-      <TouchableOpacity onPress={() => navigation.navigate('AddMeal') }>
-        <LinearGradient colors={[color.two, color.one]} style={styles.addMealButton}>
-          <Text style={styles.buttonTitle}>Add Meal</Text>
-        </LinearGradient>
-      </TouchableOpacity>
 
       <View style={styles.bottomContainer}>
 
@@ -97,7 +95,23 @@ const Overview = ({ navigation, meals, setMacros, totalCalories, totalProtein, t
 
         <View style={styles.bottomContent}>
           {
-            meals.map(item => (<SwipeableMealCard key={item.id} item={item}/>))
+            meals.map(item => (
+                <View key={item.id}>
+                  <View style={{flexDirection: 'row', backgroundColor: color.grey, marginHorizontal: 5,}}>
+                    <LinearGradient
+                        colors={[color.white, color.grey]}
+                        style={styles.separator}
+                        start={{x: 0, y: 0}} end={{x: 0.2, y: 0}}
+                    />
+                    <LinearGradient
+                        colors={[ color.grey, color.white]}
+                        style={styles.separator}
+                        start={{x: 0.8, y: 0}} end={{x: 1, y: 0}}
+                  />
+                    </View>
+                  <SwipeableMealCard item={item}/>
+                </View>
+            ))
           }
         </View>
       </View>
@@ -129,12 +143,20 @@ export default connect(mapStateToProps, mapDispatchToProps)(Overview);
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: color.grey,
+    flex: 1,
+    backgroundColor: color.white,
   },
   topContainer: {
+    flex: 1,
     backgroundColor: color.primary,
   },
+  separator: {
+    height: 3,
+    flex: 1,
+    backgroundColor: color.grey,
+  },
   topContent: {
+    flex: 1,
     marginTop: 100,
     marginHorizontal: 20,
     paddingBottom: 20,
@@ -143,28 +165,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cardContainer: {
+    flex: 1,
     marginTop: 30,
     flexDirection: 'row',
   },
   bottomContainer: {
-    marginTop: 30,
     backgroundColor: color.white,
-    borderTopRightRadius: 30,
-    borderTopLeftRadius: 30,
-    minHeight: 337,
+    flex: 1,
+    minHeight: 327,
+    marginTop: 10,
   },
   bottomContent: {
+    flex: 1,
+    backgroundColor: color.white,
     marginTop: 10,
   },
 
-  addMealButton: {
-    backgroundColor: color.two,
-    alignSelf: 'center',
-    borderRadius: 20,
-    paddingHorizontal: 30,
-    paddingVertical: 5,
-    marginTop: 30,
-  },
 
   // text
   title: {
@@ -173,14 +189,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   calorieTitle: {
-    fontFamily: 'Roboto-Black',
+    fontFamily: 'Roboto-Light',
     color: color.white,
-    fontSize: 28,
-  },
-  buttonTitle: {
-    fontFamily: 'Roboto-Bold',
-    color: color.white,
-    fontSize: 26,
+    fontSize: 45,
   },
   bottomTitle: {
     marginTop: 10,

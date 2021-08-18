@@ -1,11 +1,12 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { color } from "../../../../../assets/color/color";
+import { Text, View, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import React from 'react';
 import Feather from "react-native-vector-icons/Feather";
-import React from "react";
-import TopMenu from "../../../TopMenu";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import TopMenu from "../../TopMenu";
+import { color } from "../../../../assets/color/color";
 
-const Menu = ({ navigation }) => {
+
+const Menu = ({ navigation, title }) => {
+
   return (
       <TopMenu>
         <View style={styles.menu}>
@@ -15,17 +16,17 @@ const Menu = ({ navigation }) => {
           </TouchableOpacity>
 
           {/* Menu Title */}
-          <Text style={styles.menuTitle}>Create Meal</Text>
+          <Text style={styles.menuTitle}>{ title }</Text>
 
-          <View style={{ width: 20}}/>
+          <View style={{ width: 30,}}/>
+
+
         </View>
       </TopMenu>
   )
 }
 
-
 export default Menu;
-
 
 const styles = StyleSheet.create({
   menuTitle: {
@@ -40,6 +41,4 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-
-
 })

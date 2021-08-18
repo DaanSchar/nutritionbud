@@ -10,15 +10,17 @@ import {
     ScrollView, ActivityIndicator
 } from "react-native";
 import React, {useEffect, useState} from 'react';
-import { color } from "../../../../assets/color/color";
+import { color } from "../../../assets/color/color";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Menu from "./components/Menu";
 import MealCard from "./components/MealCard";
 import {connect} from "react-redux";
-import * as mealApiService from "../../../services/mealApiService";
+import * as mealApiService from "../../services/mealApiService";
+import LinearGradient from "react-native-linear-gradient";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 
-const AddMeal = ({ navigation }) => {
+const MealSelector = ({ navigation }) => {
 
   const [isLoading, setIsLoading] = useState(true);
   const [cantLoad, setCantLoad] = useState(false);
@@ -36,15 +38,30 @@ const AddMeal = ({ navigation }) => {
 
   const renderItem = ({ item }) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('Details', { item })}>
-        <MealCard item={item}/>
-      </TouchableOpacity>
+        <View>
+            <TouchableOpacity onPress={() => navigation.navigate('Details', { item })}>
+                <MealCard item={item}/>
+            </TouchableOpacity>
+
+            <View style={{flexDirection: 'row', backgroundColor: color.grey, marginHorizontal: 5,}}>
+                <LinearGradient
+                    colors={[color.white, color.grey]}
+                    style={styles.separator}
+                    start={{x: 0, y: 0}} end={{x: 0.2, y: 0}}
+                />
+                <LinearGradient
+                    colors={[ color.grey, color.white]}
+                    style={styles.separator}
+                    start={{x: 0.8, y: 0}} end={{x: 1, y: 0}}
+                />
+            </View>
+        </View>
     )
   }
 
 
   return (
-    <View style={{ flex: 1,}}>
+    <View style={{ flex: 1, backgroundColor: "white"}}>
       <StatusBar translucent={true} backgroundColor={'transparent'} />
 
       <Menu navigation={navigation}/>
@@ -81,7 +98,7 @@ const mapStateToProps = (state, ownProps) => ({
     meals: state.meals
 })
 
-export default connect(mapStateToProps)(AddMeal)
+export default connect(mapStateToProps)(MealSelector)
 
 
 const styles = StyleSheet.create({
@@ -96,8 +113,18 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginHorizontal: 10,
     },
+    cardContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: 'green',
+    },
     content: {
         flex: 1,
+    },
+    separator: {
+        height: 3,
+        flex: 1,
+        backgroundColor: color.grey,
     },
 
     errorContainer: {

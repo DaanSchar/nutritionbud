@@ -1,8 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { color } from "../../../../../assets/color/color";
+import { color } from "../../../../assets/color/color";
 import Feather from "react-native-vector-icons/Feather";
 import React from "react";
-import TopMenu from "../../../TopMenu";
+import TopMenu from "../../TopMenu";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
 const Menu = ({ navigation }) => {
@@ -15,12 +15,9 @@ const Menu = ({ navigation }) => {
           </TouchableOpacity>
 
           {/* Menu Title */}
-          <Text style={styles.menuTitle}>Add Meal</Text>
+          <Text style={styles.menuTitle}>Create Meal</Text>
 
-          {/* Scan Button */}
-          <TouchableOpacity onPress={() => navigation.navigate('Scanner')}>
-            <MaterialIcons name={'flip'} size={30} color={color.white}/>
-          </TouchableOpacity>
+          <View style={{ width: 20}}/>
         </View>
       </TopMenu>
   )
@@ -43,5 +40,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+
 
 })

@@ -7,7 +7,9 @@ const TopMenu = ({ children }) => {
   return (
     <View>
       <StatusBar translucent={true} backgroundColor={'transparent'} />
-      <LinearGradient colors={[color.primary, color.three]} style={styles.topMenu}>
+      <LinearGradient
+          colors={[color.primary, color.three]}
+          style={styles.topMenu}>
 
         { children }
 

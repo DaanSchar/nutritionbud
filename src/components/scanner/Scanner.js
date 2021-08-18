@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import {StatusBar, Text, View, StyleSheet, Button, TouchableOpacity, Dimensions} from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
-import {color} from "../../../../assets/color/color";
+import {color} from "../../../assets/color/color";
 import {connect} from "react-redux";
-import * as ScannerActions from "../../../store/scanner/ScannerActions";
-import * as mealActions from "../../../store/meals/mealActions";
+import * as ScannerActions from "../../store/scanner/ScannerActions";
+import * as mealActions from "../../store/meals/mealActions";
 import LinearGradient from "react-native-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import TopMenu from "../../TopMenu";
+import TopMenu from "../TopMenu";
 import Feather from "react-native-vector-icons/Feather";
 
 const Scanner = ({ meals, navigation, scan, findMeal }) => {
@@ -52,8 +52,6 @@ const Scanner = ({ meals, navigation, scan, findMeal }) => {
 
     let item = findMeal(data);
     let id = data;
-
-    // TODO: transition to right screen
 
     if (!(item === null))
       navigation.navigate('Details', { item })

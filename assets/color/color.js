@@ -9,4 +9,10 @@ export const color = {
   four: '#f27059',
   primary: '#f25c54',
   grey: '#f2f2f2',
+  offWhite: '#d9d9d9',
+
+  tab: '#181F31',
+  selected: '#F8F8F8',
+  background: '#2B3654',
+  middle: '#5DA2F1'
 }

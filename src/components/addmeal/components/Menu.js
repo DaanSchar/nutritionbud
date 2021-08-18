@@ -1,12 +1,11 @@
-import { Text, View, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
-import React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { color } from "../../../../assets/color/color";
 import Feather from "react-native-vector-icons/Feather";
-import TopMenu from "../../../TopMenu";
-import { color } from "../../../../../assets/color/color";
+import React from "react";
+import TopMenu from "../../TopMenu";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-
-const Menu = ({ navigation, title }) => {
-
+const Menu = ({ navigation }) => {
   return (
       <TopMenu>
         <View style={styles.menu}>
@@ -16,17 +15,20 @@ const Menu = ({ navigation, title }) => {
           </TouchableOpacity>
 
           {/* Menu Title */}
-          <Text style={styles.menuTitle}>{ title }</Text>
+          <Text style={styles.menuTitle}>Add Meal</Text>
 
-          <View style={{ width: 30,}}/>
-
-
+          {/* Scan Button */}
+          <TouchableOpacity onPress={() => navigation.navigate('Scanner')}>
+            <MaterialIcons name={'flip'} size={30} color={color.white}/>
+          </TouchableOpacity>
         </View>
       </TopMenu>
   )
 }
 
+
 export default Menu;
+
 
 const styles = StyleSheet.create({
   menuTitle: {
@@ -41,4 +43,5 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+
 })
