@@ -9,15 +9,15 @@ import {
   BackHandler
 } from "react-native";
 import React, {useEffect, useState} from "react";
-import { color } from "../../../assets/color/color";
+import { color } from "../../../../assets/color/color";
 import Menu from "./components/Menu";
 import LinearGradient from "react-native-linear-gradient";
 import { connect } from "react-redux";
 import NutritionCard from "./components/NutritionCard";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { personalData } from "../../../assets/data/personalData";
-import * as currentIntakeActions from "../../store/meals/currentIntakeActions";
-import * as mealApiService from "../../services/mealApiService";
+import { personalData } from "../../../../assets/data/personalData";
+import * as currentIntakeActions from "../../../store/meals/currentIntakeActions";
+import * as mealApiService from "../../../services/mealApiService";
 
 
 const Details = ({ navigation, route, addIntake }) => {

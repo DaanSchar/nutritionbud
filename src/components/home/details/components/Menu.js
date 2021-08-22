@@ -1,8 +1,8 @@
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import React from 'react';
 import Feather from "react-native-vector-icons/Feather";
-import TopMenu from "../../TopMenu";
-import { color } from "../../../../assets/color/color";
+import TopMenu from "../../../TopMenu";
+import { color } from "../../../../../assets/color/color";
 
 
 const Menu = ({ navigation, title, destination }) => {

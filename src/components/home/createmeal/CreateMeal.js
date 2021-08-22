@@ -1,15 +1,15 @@
 import {Text, View, StyleSheet, TouchableOpacity, TextInput, Picker, ScrollView, BackHandler} from "react-native";
 import React, {useEffect, useState} from 'react';
-import TopMenu from "../TopMenu";
+import TopMenu from "../../TopMenu";
 import Feather from "react-native-vector-icons/Feather";
-import {color} from "../../../assets/color/color";
+import {color} from "../../../../assets/color/color";
 import Menu from "./components/Menu";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import DropDownPicker from 'react-native-dropdown-picker';
 import LinearGradient from "react-native-linear-gradient";
 import {connect} from "react-redux";
-import * as mealActions from "../../store/meals/mealActions";
-import * as mealApiService from "../../services/mealApiService";
+import * as mealActions from "../../../store/meals/mealActions";
+import * as mealApiService from "../../../services/mealApiService";
 
 
 const CreateMeal = ({ navigation, route, createMeal}) => {

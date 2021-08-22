@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { color } from "../../../../assets/color/color";
+import { color } from "../../../../../assets/color/color";
 import React from "react";
 import ProgressCircle from "react-native-progress-circle";
 import LinearGradient from "react-native-linear-gradient";

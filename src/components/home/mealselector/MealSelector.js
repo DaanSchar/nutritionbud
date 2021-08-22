@@ -10,12 +10,12 @@ import {
     ScrollView, ActivityIndicator, BackHandler
 } from "react-native";
 import React, {useEffect, useState} from 'react';
-import { color } from "../../../assets/color/color";
+import { color } from "../../../../assets/color/color";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Menu from "./components/Menu";
 import MealCard from "./components/MealCard";
 import {connect} from "react-redux";
-import * as mealApiService from "../../services/mealApiService";
+import * as mealApiService from "../../../services/mealApiService";
 import LinearGradient from "react-native-linear-gradient";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
@@ -47,12 +47,7 @@ const MealSelector = ({ navigation }) => {
   }
 
   const sortData = () => {
-      return data.filter(item => {
-          for (let i = 0; i < text.length; i++)
-              if (text.toLowerCase()[i] !== item.name.toLowerCase()[i])
-                  return false
-          return true
-      })
+      return data.filter(item => item.name.toLowerCase().includes(text.toLowerCase()))
   }
 
   const renderItem = ({ item }) => {
@@ -94,17 +89,19 @@ const MealSelector = ({ navigation }) => {
 
       <View style={styles.content}>
           {
-              isLoading && !cantLoad? <ActivityIndicator color={color.primary} size={40} style={{marginTop: 250}}/> :
+              isLoading && !cantLoad? <ActivityIndicator color={color.primary} size={40} style={{marginTop: 250}}/>
+                  :
               <FlatList
               data={sortData()}
               keyExtractor={item => item.id.toString()}
               renderItem={renderItem}/>
           }
           {
-              cantLoad ? <View style={styles.errorContainer}>
-                  <Text style={styles.errorText}>Unable to load meals.</Text>
-                  <Text style={styles.errorText}>Please try again later</Text>
-              </View> : null
+              cantLoad ?
+                  <View style={styles.errorContainer}>
+                      <Text style={styles.errorText}>Unable to load meals.</Text>
+                      <Text style={styles.errorText}>Please try again later</Text>
+                  </View> : null
           }
       </View>
     </View>

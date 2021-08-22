@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet } from "react-native";
-import { color } from "../../../../assets/color/color";
+import { color } from "../../../../../assets/color/color";
 import React from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import LinearGradient from "react-native-linear-gradient";

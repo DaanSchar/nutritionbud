@@ -1,11 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import TabNav from "../components/navigation/tabnav/TabNav";
-import MealSelector from "../components/addmeal/MealSelector";
+import MealSelector from "../components/home/mealselector/MealSelector";
 import Scanner from "../components/scanner/Scanner";
-import Details from "../components/details/Details";
-import CreateMeal from "../components/createmeal/CreateMeal";
-import Loading from "../components/loading/Loading";
+import Details from "../components/home/details/Details";
+import CreateMeal from "../components/home/createmeal/CreateMeal";
+import Loading from "../components/home/loading/Loading";
 
 const Stack = createStackNavigator();
 

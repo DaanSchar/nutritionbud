@@ -1,5 +1,5 @@
 import {ActivityIndicator, Text, View} from "react-native";
-import {color} from "../../../assets/color/color";
+import {color} from "../../../../assets/color/color";
 import React from "react";
 
 const Loading = ({ route }) => {

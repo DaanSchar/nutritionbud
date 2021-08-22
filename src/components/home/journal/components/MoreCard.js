@@ -1,12 +1,12 @@
 import {StyleSheet, TouchableOpacity} from "react-native";
 import React from 'react';
-import {color} from "../../../../assets/color/color";
+import {color} from "../../../../../assets/color/color";
 import Feather from "react-native-vector-icons/Feather";
 
 const MoreCard = () => {
     return (
         <TouchableOpacity onPress={() => {}} style={styles.card}>
-            <Feather name={'chevron-right'} size={55} color={color.one}/>
+            <Feather name={'chevron-right'} size={25} color={color.one}/>
         </TouchableOpacity>
     )
 }
@@ -15,15 +15,16 @@ export default MoreCard;
 
 const styles = StyleSheet.create({
     card: {
-        width: 150,
-        height: 150,
+        alignSelf: 'center',
+        width: 40,
+        height: 40,
         marginLeft: 20,
         backgroundColor: color.white,
-        borderRadius: 20,
+        borderRadius: 100,
         flex: 1,
         elevation: 0,
         marginBottom: 10,
-        borderWidth:4,
+        borderWidth: 2,
         borderColor: color.one,
         alignItems: 'center',
         justifyContent: 'center',

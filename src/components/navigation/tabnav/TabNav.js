@@ -5,13 +5,15 @@ import Overview from "../../progress/Overview";
 import {Text, View, StyleSheet} from "react-native";
 import {color} from "../../../../assets/color/color";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import MealSelector from "../../addmeal/MealSelector";
+import MealSelector from "../../home/mealselector/MealSelector";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import AddButton from "./components/AddButton";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Feather from "react-native-vector-icons/Feather";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Icon from "./components/Icon";
+import Profile from "../../profile/Profile";
+import Settings from "../../settings/Settings";
 
 const Tab = createBottomTabNavigator();
 
@@ -43,7 +45,7 @@ const TabNav = ({ navigation }) => {
                 )}
             }/>
 
-            <Tab.Screen name="something" component={Overview} options={{
+            <Tab.Screen name="Progress" component={Overview} options={{
                 tabBarIcon: ({focused}) => (
                     <Icon focused={focused} title={'Progress'}>
                         <Ionicons name={'bar-chart'} size={25} color={getColor(focused)}/>
@@ -57,7 +59,7 @@ const TabNav = ({ navigation }) => {
                 )}
             }/>
 
-            <Tab.Screen name="Profile" component={Overview} options={{
+            <Tab.Screen name="Profile" component={Profile} options={{
                 tabBarIcon: ({focused}) => (
                     <Icon focused={focused} title={'Profile'}>
                         <FontAwesome5 name={'user'} size={25} color={getColor(focused)}/>
@@ -65,7 +67,7 @@ const TabNav = ({ navigation }) => {
                 )}
             }/>
 
-            <Tab.Screen name="Settings" component={Overview} options={{
+            <Tab.Screen name="Settings" component={Settings} options={{
                 tabBarIcon: ({focused}) => (
                     <Icon focused={focused} title={'Settings'}>
                         <FontAwesome5 name={'cog'} size={25} color={getColor(focused)}/>
