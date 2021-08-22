@@ -17,13 +17,18 @@ const Overview = () => {
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
-        mealApiService.getMacros().then(data => setData([...data]))
-
-        setLoading(false)
+        mealApiService.getMacros()
+            .then(data => setData([...data]))
+            .then(() =>setLoading(false))
     }, [isFocused])
 
 
     return (
+        isLoading ?
+        <View style={{flex: 1, backgroundColor: colors.white}}>
+            <ActivityIndicator color={color.primary} size={40} style={{marginTop: 250}}/>
+        </View>
+            :
         <ScrollView style={{ flex: 1, backgroundColor: color.white}}>
             {/* Menu */}
             <StatusBar translucent={true} backgroundColor={'transparent'} />
@@ -36,7 +41,7 @@ const Overview = () => {
 
                 <View style={styles.topContent}>
 
-                    <View style={{}}>
+                    <View>
                         <Text style={styles.title}>Total days tracked</Text>
                         <Text style={styles.daysTitle}>{data.length} Days</Text>
                     </View>

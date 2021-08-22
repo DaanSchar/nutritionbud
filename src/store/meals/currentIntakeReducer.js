@@ -74,8 +74,6 @@ function deleteIntake(state, action) {
     }
   }
 
-  console.log(mealIndex)
-
   let meal = state.intakes[mealIndex];
   state.intakes.splice(mealIndex, 1)
 

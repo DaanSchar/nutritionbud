@@ -16,7 +16,6 @@ const Scanner = ({ navigation }) => {
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [text, setText] = useState('not scanned yet');
 
   const {width, height} = Dimensions.get('window');
 
@@ -28,6 +27,7 @@ const Scanner = ({ navigation }) => {
   }
 
   useEffect(() => {
+    setScanned(false);
     askForCameraPermission()
   }, []);
 
@@ -50,13 +50,13 @@ const Scanner = ({ navigation }) => {
 
 
   const handleBarCodeScanned = async ({type, data}) => {
-    setScanned(true);
-    setText(data);
-    // scan(data)
+    setScanned(false);
 
     let id = data;
+
+    navigation.navigate('Loading')
+
     let item = await mealApiService.getMealById(id)
-    console.log(item)
 
     if (item)
       navigation.navigate('Details', {item})
@@ -89,14 +89,11 @@ const Scanner = ({ navigation }) => {
       </View>
 
       <LinearGradient
-          colors={[color.four, color.three]}
+          colors={[color.primary, color.four]}
           style={styles.bottomBox}
           start={{ x: 0, y: 0 }}
           end={{ x: 3, y: 0 }}
-      >
-        <Text style={styles.mainText}>{text}</Text>
-        {scanned && <Button title={'scan again?'} onPress={() => setScanned(false)} color={'tomato'}/>}
-      </LinearGradient>
+      />
 
     </View>
   )
