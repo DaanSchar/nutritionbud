@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     color: color.two,
     fontSize: 22,
+    width: 180,
   },
   nutContainer: {
     flexDirection: 'row',

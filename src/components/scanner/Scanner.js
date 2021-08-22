@@ -27,7 +27,7 @@ const Scanner = ({ navigation }) => {
   }
 
   useEffect(() => {
-    setScanned(false);
+    setScanned(false)
     askForCameraPermission()
   }, []);
 
@@ -50,18 +50,21 @@ const Scanner = ({ navigation }) => {
 
 
   const handleBarCodeScanned = async ({type, data}) => {
-    setScanned(false);
-
+    setScanned(true)
     let id = data;
+    console.log(scanned)
+
 
     navigation.navigate('Loading')
 
-    let item = await mealApiService.getMealById(id)
-
-    if (item)
-      navigation.navigate('Details', {item})
-    else
-      navigation.navigate('CreateMeal', { id })
+    let item = await mealApiService.getMealById(id).then(() => {
+      if (item) {
+        console.log(item)
+        navigation.navigate('Details', {item})
+    } else {
+      console.log('we didnt found m')
+      navigation.navigate('CreateMeal', {id})
+    }})
   }
 
   return (
