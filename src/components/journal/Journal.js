@@ -17,6 +17,8 @@ import * as mealApiService from "../../services/mealApiService";
 import {useIsFocused} from "@react-navigation/native";
 import * as currentIntakeActions from "../../store/meals/currentIntakeActions";
 import * as storage from "../../services/storage";
+import MoreCard from "./components/MoreCard";
+import Feather from "react-native-vector-icons/Feather";
 
 
 const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, totalFat, totalCarbohydrates, setMeals}) => {
@@ -100,10 +102,12 @@ const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, 
           horizontal
           showsHorizontalScrollIndicator={false}
           alwaysBounceHorizontal={true}
-          style={styles.cardContainer}>
+          style={styles.cardContainer}
+        >
           <NutritionCard type={'Protein'} total={parseInt(totalProtein)} index={1}/>
           <NutritionCard type={'Fat'} total={parseInt(totalFat)} index={2}/>
           <NutritionCard type={'Carbs'} total={parseInt(totalCarbohydrates)} index={3}/>
+          <MoreCard/>
         </ScrollView>
 
         <View style={styles.bottomContainer}>
@@ -112,7 +116,13 @@ const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, 
 
           <View style={styles.bottomContent}>
           {
-            intakes.map(item => (
+            intakes.length === 0 ?
+                <View style={styles.emptyContainer}>
+                  <Text style={styles.emptyTitle}>Start tracking your meals today</Text>
+                  <Feather style={{marginTop: 30,}} name={'arrow-down'} size={25} color={color.primary}/>
+                </View>
+                :
+                intakes.map(item => (
                 <View key={item.id}>
                   <View style={{flexDirection: 'row', backgroundColor: color.grey, marginHorizontal: 5,}}>
                     <LinearGradient
@@ -162,7 +172,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: color.white,
-    minHeight: 575,
   },
   topContainer: {
     flex: 1,
@@ -198,6 +207,11 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
     marginTop: 10,
   },
+  emptyContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 130
+  },
 
 
   // text
@@ -217,5 +231,10 @@ const styles = StyleSheet.create({
     color: color.two,
     fontSize: 26,
     alignSelf: 'center',
-  }
+  },
+  emptyTitle: {
+    fontFamily: 'Roboto-Light',
+    color: 'grey',
+    fontSize: 16,
+  },
 })

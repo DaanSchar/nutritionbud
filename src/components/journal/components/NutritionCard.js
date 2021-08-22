@@ -21,7 +21,7 @@ const NutritionCard = ({ type, total, index}) => {
           colors={colors}
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
-          style={[styles.card, index === 3 ? {marginRight: 20} : null]}>
+          style={[styles.card, index === 3 ? {marginRight: 0} : null]}>
 
 
       <View style={styles.typeContainer}>
