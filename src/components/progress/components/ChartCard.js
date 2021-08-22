@@ -11,6 +11,7 @@ const ChartCard = ({ data }) => {
     let colors = [color.four, color.one]
     const [type, setType] = useState('Calories');
 
+    //TODO Play with button colors
 
     return (
         <TouchableWithoutFeedback onPress={() => setType(type === 'Calories' ? 'Fat' : 'Calories')}>

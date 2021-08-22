@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     TextInput,
     FlatList,
-    ScrollView, ActivityIndicator
+    ScrollView, ActivityIndicator, BackHandler
 } from "react-native";
 import React, {useEffect, useState} from 'react';
 import { color } from "../../../assets/color/color";
@@ -26,15 +26,24 @@ const MealSelector = ({ navigation }) => {
   const [cantLoad, setCantLoad] = useState(false);
   const [data, setData] = useState([]);
 
-    useEffect(() => {
-        mealApiService.getAllMeals().then(r => {
-            setData([...r]);
-            setIsLoading(false)
-        }).catch(error => {
-            console.log(error);
-            setCantLoad(true);
-        })
-    }, [])
+  useEffect(() => {
+    mealApiService.getAllMeals().then(r => {
+        setData([...r]);
+        setIsLoading(false)
+    }).catch(error => {
+        console.log(error);
+        setCantLoad(true);
+    })
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () =>
+        BackHandler.removeEventListener("hardwareBackPress", backAction);
+  }, [])
+
+  const backAction = () => {
+    navigation.navigate('Home')
+    return true
+  }
 
   const renderItem = ({ item }) => {
     return (
@@ -64,7 +73,7 @@ const MealSelector = ({ navigation }) => {
     <View style={{ flex: 1, backgroundColor: "white"}}>
       <StatusBar translucent={true} backgroundColor={'transparent'} />
 
-      <Menu navigation={navigation}/>
+      <Menu navigation={navigation} destination={'Home'}/>
 
       <View style={styles.search}>
         <View style={styles.searchBarContainer}>

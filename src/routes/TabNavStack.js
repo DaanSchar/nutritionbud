@@ -5,6 +5,7 @@ import MealSelector from "../components/addmeal/MealSelector";
 import Scanner from "../components/scanner/Scanner";
 import Details from "../components/details/Details";
 import CreateMeal from "../components/createmeal/CreateMeal";
+import Loading from "../components/loading/Loading";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,7 @@ const TabNavStack = () => {
             <Stack.Screen name={'Scanner'} component={Scanner}/>
             <Stack.Screen name={'CreateMeal'} component={CreateMeal}/>
 
+            <Stack.Screen name={'Loading'} component={Loading}/>
 
         </Stack.Navigator>
     )

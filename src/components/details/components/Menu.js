@@ -1,17 +1,17 @@
-import { Text, View, StyleSheet, SafeAreaView, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import React from 'react';
 import Feather from "react-native-vector-icons/Feather";
 import TopMenu from "../../TopMenu";
 import { color } from "../../../../assets/color/color";
 
 
-const Menu = ({ navigation, title }) => {
+const Menu = ({ navigation, title, destination }) => {
 
   return (
       <TopMenu>
         <View style={styles.menu}>
           {/* back button */}
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => destination ? navigation.navigate(destination) : navigation.goBack()}>
             <Feather name={"chevron-left"} size={30} color={color.white} />
           </TouchableOpacity>
 

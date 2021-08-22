@@ -19,7 +19,7 @@ import * as currentIntakeActions from "../../store/meals/currentIntakeActions";
 import * as storage from "../../services/storage";
 
 
-const Journal = ({ navigation, meals, setMacros, totalCalories, totalProtein, totalFat, totalCarbohydrates, setMeals}) => {
+const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, totalFat, totalCarbohydrates, setMeals}) => {
 
   const [isLoading, setLoading] = useState(true);
   const [cantLoad, setCantLoad] = useState(false);
@@ -112,7 +112,7 @@ const Journal = ({ navigation, meals, setMacros, totalCalories, totalProtein, to
 
           <View style={styles.bottomContent}>
           {
-            meals.map(item => (
+            intakes.map(item => (
                 <View key={item.id}>
                   <View style={{flexDirection: 'row', backgroundColor: color.grey, marginHorizontal: 5,}}>
                     <LinearGradient
@@ -141,7 +141,7 @@ const Journal = ({ navigation, meals, setMacros, totalCalories, totalProtein, to
 
 const mapStateToProps = (state, ownProps) => ({
   navigation: ownProps.navigation,
-  meals: state.currentIntake.meals,
+  intakes: state.currentIntake.intakes,
   totalCalories: state.currentIntake.macros.totalCalories,
   totalProtein: state.currentIntake.macros.totalProtein,
   totalFat: state.currentIntake.macros.totalFat,

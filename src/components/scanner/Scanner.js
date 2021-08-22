@@ -12,7 +12,7 @@ import Feather from "react-native-vector-icons/Feather";
 import * as mealApiService from "../../services/mealApiService";
 import {useIsFocused} from "@react-navigation/native";
 
-const Scanner = ({ meals, navigation, scan, findMeal }) => {
+const Scanner = ({ navigation }) => {
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
@@ -52,7 +52,7 @@ const Scanner = ({ meals, navigation, scan, findMeal }) => {
   const handleBarCodeScanned = async ({type, data}) => {
     setScanned(true);
     setText(data);
-    scan(data)
+    // scan(data)
 
     let id = data;
     let item = await mealApiService.getMealById(id)
@@ -102,20 +102,8 @@ const Scanner = ({ meals, navigation, scan, findMeal }) => {
   )
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  navigation: ownProps.navigation,
-  meals: state.meals,
-})
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    dispatch,
-    scan: (data) => dispatch(ScannerActions.scan(data)),
-    findMeal: (id) => dispatch(mealActions.findById(id)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Scanner);
+export default Scanner;
 
 const styles = StyleSheet.create({
   container: {

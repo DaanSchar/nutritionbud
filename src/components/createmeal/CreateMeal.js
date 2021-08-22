@@ -1,5 +1,5 @@
 import {Text, View, StyleSheet, TouchableOpacity, TextInput, Picker, ScrollView, BackHandler} from "react-native";
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import TopMenu from "../TopMenu";
 import Feather from "react-native-vector-icons/Feather";
 import {color} from "../../../assets/color/color";
@@ -37,6 +37,18 @@ const CreateMeal = ({ navigation, route, createMeal}) => {
         portionType: portionType,
     }
 
+    useEffect(() => {
+        BackHandler.addEventListener("hardwareBackPress", backAction);
+
+        return () =>
+            BackHandler.removeEventListener("hardwareBackPress", backAction);
+    }, [])
+
+    const backAction = () => {
+        navigation.navigate('Home')
+        return true
+    }
+
     const onPressCreate = () => {
         if (filledInAll()) {
             createMeal(meal);
@@ -46,16 +58,6 @@ const CreateMeal = ({ navigation, route, createMeal}) => {
             setShowFields(true);
         }
     }
-
-    const backAction = () => {
-        navigation.navigate('Home')
-        return true
-    }
-
-    const backHandler = BackHandler.addEventListener(
-        "hardwareBackPress",
-        backAction
-        );
 
     const filledInAll = () => {
         if (meal.name.length < 3)
