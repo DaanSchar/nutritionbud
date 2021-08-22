@@ -57,7 +57,7 @@ const Scanner = ({ navigation }) => {
 
     navigation.navigate('Loading')
 
-    let item = await mealApiService.getMealById(id).then(() => {
+    await mealApiService.getMealById(id).then(item => {
       if (item) {
         console.log(item)
         navigation.navigate('Details', {item})
