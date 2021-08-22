@@ -5,12 +5,12 @@ import React from "react";
 import TopMenu from "../../TopMenu";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 
-const Menu = ({ navigation }) => {
+const Menu = ({ navigation, destination }) => {
   return (
       <TopMenu>
         <View style={styles.menu}>
           {/* back button */}
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => destination ? navigation.navigate(destination) : navigation.goBack()}>
             <Feather name={"chevron-left"} size={30} color={color.white} />
           </TouchableOpacity>
 

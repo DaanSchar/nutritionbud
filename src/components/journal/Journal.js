@@ -16,40 +16,57 @@ import { connect } from "react-redux";
 import * as mealApiService from "../../services/mealApiService";
 import {useIsFocused} from "@react-navigation/native";
 import * as currentIntakeActions from "../../store/meals/currentIntakeActions";
-import {getMacros} from "../../services/mealApiService";
+import * as storage from "../../services/storage";
 
 
-const Overview = ({ navigation, meals, setMacros, totalCalories, totalProtein, totalFat, totalCarbohydrates, setMeals}) => {
+const Journal = ({ navigation, meals, setMacros, totalCalories, totalProtein, totalFat, totalCarbohydrates, setMeals}) => {
 
   const [isLoading, setLoading] = useState(true);
   const [cantLoad, setCantLoad] = useState(false);
   const isFocused = useIsFocused()
-  const userId = '1'
-  const id = '2222'
 
   useEffect(() => {
     if (isFocused)
+      getUserToken()
       getIntake()
       getMacros()
   }, [isFocused])
 
   const getIntake = () => {
-    mealApiService.getIntakeToday().then(r => {
-      setMeals([...r]);
-    }).catch(error => {
-      console.log(error);
-      setCantLoad(true);
-    })
+    mealApiService.getIntakeToday()
+        .then(r => {
+          setMeals([...r]);
+      })
+        .catch(error => {
+          console.log(error);
+          setCantLoad(true);
+      })
   }
 
   const getMacros = () => {
-    mealApiService.getMacros(userId).then(r => {
-      setMacros(r)
-      setLoading(false)
-    }).catch(error => {
-      console.log(error);
-      setCantLoad(true);
-    })
+    mealApiService.getMacrosToday()
+        .then(r => {
+          setMacros(r)
+          setLoading(false)
+      })
+        .catch(error => {
+          console.log(error);
+          setCantLoad(true);
+      })
+  }
+
+  const getUserToken = () => {
+    mealApiService.getUserToken('daan.schaer@gmail.com', '12345')
+        .then( token => {
+          storage.storeUserToken(token)
+              .then()
+              .catch(error => console.warn(error))
+        })
+        .catch(error => {
+          console.log(error);
+          setCantLoad(true);
+        })
+
   }
 
   return (
@@ -139,12 +156,13 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Overview);
+export default connect(mapStateToProps, mapDispatchToProps)(Journal);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: color.white,
+    minHeight: 575,
   },
   topContainer: {
     flex: 1,

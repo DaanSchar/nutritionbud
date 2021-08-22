@@ -2,7 +2,7 @@ import React from 'react';
 import { createStackNavigator } from "@react-navigation/stack";
 import AddMeal from "../components/addmeal/MealSelector";
 import Details from "../components/details/Details";
-import Overview from "../components/overview/Overview";
+import Overview from "../components/journal/Journal";
 import Scanner from "../components/scanner/Scanner";
 import CreateMeal from "../components/createmeal/CreateMeal";
 import MealSelector from "../components/addmeal/MealSelector";

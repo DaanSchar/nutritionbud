@@ -24,7 +24,6 @@ export const currentIntakeReducer = (state = initialState, action) => {
 
 function setMacros(state, action) {
   let macros = action.data
-  console.log(macros)
 
 
   return {
@@ -76,7 +75,6 @@ function deleteMeal(state, action) {
 
   let mealIndex;
 
-  console.log(action.meal)
 
   for (let i = 0; i < state.meals.length; i++) {
     if (mealsAreTheSame(state.meals[i], action.meal)) {

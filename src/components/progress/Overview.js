@@ -1,10 +1,27 @@
-import {Text, View, StyleSheet, StatusBar, ScrollView} from "react-native";
-import React from 'react';
+import {Text, View, StyleSheet, StatusBar, ScrollView, FlatList, ActivityIndicator} from "react-native";
+import React, {useEffect, useState} from 'react';
 import {color} from "../../../assets/color/color";
 import Chart from "./components/Chart";
 import LinearGradient from "react-native-linear-gradient";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import * as mealApiService from "../../services/mealApiService";
+import ChartCard from "./components/ChartCard";
+import {useIsFocused} from "@react-navigation/native";
 
 const Overview = () => {
+
+    const isFocused = useIsFocused()
+    let colors = [color.primary, color.three]
+
+    const [data, setData] = useState([]);
+    const [isLoading, setLoading] = useState(true)
+
+    useEffect(() => {
+        mealApiService.getMacros().then(data => setData([...data]))
+
+        setLoading(false)
+    }, [isFocused])
+
 
     return (
         <ScrollView style={{ flex: 1, backgroundColor: color.white}}>
@@ -21,15 +38,15 @@ const Overview = () => {
 
                     <View style={{}}>
                         <Text style={styles.title}>Total days tracked</Text>
-                        <Text style={styles.daysTitle}>{12} Days</Text>
+                        <Text style={styles.daysTitle}>{data.length} Days</Text>
                     </View>
 
                 </View>
             </LinearGradient>
+            {
+                isLoading ? <ActivityIndicator color={color.primary} size={40} style={{marginTop: 150}}/> : <ChartCard data={data}/>
+            }
 
-            <View>
-                <Chart/>
-            </View>
         </ScrollView>
     )
 }

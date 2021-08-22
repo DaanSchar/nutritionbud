@@ -1,4 +1,4 @@
-import {Text, View, StyleSheet, TouchableOpacity, TextInput, Picker, ScrollView} from "react-native";
+import {Text, View, StyleSheet, TouchableOpacity, TextInput, Picker, ScrollView, BackHandler} from "react-native";
 import React, {useState} from 'react';
 import TopMenu from "../TopMenu";
 import Feather from "react-native-vector-icons/Feather";
@@ -28,7 +28,7 @@ const CreateMeal = ({ navigation, route, createMeal}) => {
 
     let meal = {
         name: name,
-        id: id,
+        publicId: id,
         calories: calories,
         fat: fat,
         carbohydrates: carbs,
@@ -41,11 +41,21 @@ const CreateMeal = ({ navigation, route, createMeal}) => {
         if (filledInAll()) {
             createMeal(meal);
             mealApiService.createMeal(meal).then(r => console.log(r))
-            navigation.navigate('AddMeal')
+            navigation.navigate('MealSelector')
         } else {
             setShowFields(true);
         }
     }
+
+    const backAction = () => {
+        navigation.navigate('Home')
+        return true
+    }
+
+    const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+        );
 
     const filledInAll = () => {
         if (meal.name.length < 3)
@@ -65,7 +75,7 @@ const CreateMeal = ({ navigation, route, createMeal}) => {
 
     return (
         <ScrollView>
-            <Menu navigation={navigation}/>
+            <Menu navigation={navigation} destination={'Home'}/>
 
             <View style={styles.content}>
 

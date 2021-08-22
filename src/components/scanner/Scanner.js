@@ -9,6 +9,8 @@ import LinearGradient from "react-native-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import TopMenu from "../TopMenu";
 import Feather from "react-native-vector-icons/Feather";
+import * as mealApiService from "../../services/mealApiService";
+import {useIsFocused} from "@react-navigation/native";
 
 const Scanner = ({ meals, navigation, scan, findMeal }) => {
 
@@ -29,6 +31,7 @@ const Scanner = ({ meals, navigation, scan, findMeal }) => {
     askForCameraPermission()
   }, []);
 
+
   if (hasPermission === null) {
     return (
       <View></View>
@@ -45,29 +48,21 @@ const Scanner = ({ meals, navigation, scan, findMeal }) => {
     )
   }
 
-  const handleBarCodeScanned = ({type, data}) => {
+
+  const handleBarCodeScanned = async ({type, data}) => {
     setScanned(true);
     setText(data);
     scan(data)
 
-    let item = findMeal(data);
     let id = data;
+    let item = await mealApiService.getMealById(id)
+    console.log(item)
 
-    if (!(item === null))
-      navigation.navigate('Details', { item })
+    if (item)
+      navigation.navigate('Details', {item})
     else
       navigation.navigate('CreateMeal', { id })
   }
-
-  function findMeal(id) {
-    for (let i = 0; i < meals.length; i++) {
-      if (meals[i].id === id) {
-        return meals[i];
-      }
-    }
-    return null;
-  }
-
 
   return (
     <View style={{ flex: 1,}}>
@@ -93,7 +88,12 @@ const Scanner = ({ meals, navigation, scan, findMeal }) => {
         />
       </View>
 
-      <LinearGradient colors={[color.three, color.two]} style={styles.bottomBox}>
+      <LinearGradient
+          colors={[color.four, color.three]}
+          style={styles.bottomBox}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 3, y: 0 }}
+      >
         <Text style={styles.mainText}>{text}</Text>
         {scanned && <Button title={'scan again?'} onPress={() => setScanned(false)} color={'tomato'}/>}
       </LinearGradient>

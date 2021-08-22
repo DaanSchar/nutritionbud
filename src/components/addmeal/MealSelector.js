@@ -78,7 +78,7 @@ const MealSelector = ({ navigation }) => {
               isLoading && !cantLoad? <ActivityIndicator color={color.primary} size={40} style={{marginTop: 250}}/> :
               <FlatList
               data={data}
-              keyExtractor={item => item.id}
+              keyExtractor={item => item.id.toString()}
               renderItem={renderItem}/>
           }
           {
@@ -103,14 +103,14 @@ export default connect(mapStateToProps)(MealSelector)
 
 const styles = StyleSheet.create({
     search: {
-        backgroundColor: color.three,
+        backgroundColor: color.primary,
         paddingBottom: 15,
     },
     searchBarContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: color.white,
-        borderRadius: 20,
+        borderRadius: 30,
         marginHorizontal: 10,
     },
     cardContainer: {
