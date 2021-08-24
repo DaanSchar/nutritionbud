@@ -4,6 +4,9 @@ import * as storage from "./storage";
 
 const url = API.baseUrl;
 
+//TODO make this service take care of more things: for example: return an object with all info {message: 'message', status: 201}
+
+
 export const getAllMeals = () => {
     return fetch(url + '/meals')
         .then( (response) => response.json() )
