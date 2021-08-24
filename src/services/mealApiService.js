@@ -17,7 +17,7 @@ export const createMeal = (meal) => {
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify(meal),
         })
-        .then( (response) => response.json )
+        .then( (response) => response.json() )
         .then ( (responseData) => { return responseData; })
         .catch( (error) => console.warn(error));
 }
@@ -69,7 +69,7 @@ export const deleteIntake = async (intake) => {
             headers: headers,
             method: 'DELETE',
         })
-        .then( (response) => response.json )
+        .then( (response) => response.json() )
         .then ( (responseData) => { return responseData; })
         .catch( (error) => console.warn(error));
 }
@@ -93,14 +93,33 @@ export const getMacros = async () => {
 }
 
 
-// TODO: make this only be called when token is expired.
-//  Right now this method gets called everytime we reload.
-export const getUserToken = (username, password) => {
+export const login = async(username, password) => {
     let headers = new Headers()
-    headers.set('Authorization', 'Basic ' + base64.encode(username + ":" + password));
+    headers.set('Authorization', 'Basic ' + base64.encode(username.toLowerCase() + ":" + password));
 
     return fetch(url + '/users/login',{ headers: headers })
-        .then( (response) => response.json() )
-        .then( (responseData) => { return responseData.token; })
+        .then( (response) => {
+            return response
+        })
         .catch( (error) => console.warn(error));
+}
+
+export const register = async(email, password, firstName, lastName) => {
+
+    let body = {
+        email: email.toLowerCase(),
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+    };
+
+    return fetch(url + '/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(body)})
+        .then(response => {
+            return response
+        })
+        .catch(error => console.log(error))
+
 }

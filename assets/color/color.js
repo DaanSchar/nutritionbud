@@ -1,7 +1,7 @@
 export const color = {
 
 
-  white: '#fdfffc',
+  white: 'white',
 
   one: '#f7b267',
   two : '#f79d65',

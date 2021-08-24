@@ -10,6 +10,8 @@ import {useIsFocused} from "@react-navigation/native";
 
 const Overview = () => {
 
+    // TODO decrease size of graph buttons
+
     const isFocused = useIsFocused()
     let colors = [color.primary, color.three]
 
@@ -18,7 +20,9 @@ const Overview = () => {
 
     useEffect(() => {
         mealApiService.getMacros()
-            .then(data => setData([...data]))
+            .then(data => {
+                setData([...data])
+            })
             .then(() =>setLoading(false))
     }, [isFocused])
 

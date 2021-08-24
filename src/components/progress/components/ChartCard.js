@@ -32,25 +32,25 @@ const ChartCard = ({ data }) => {
 
                     <TouchableOpacity onPress={() => { setType('Calories')}}>
                         <View style={[styles.iconLeft, type === 'Calories' ? { backgroundColor: color.four } : undefined]}>
-                            <MaterialIcons name={'inventory'} size={30} color={type === 'Calories' ? color.white : color.offWhite}/>
+                            <MaterialIcons name={'inventory'} size={23} color={type === 'Calories' ? color.white : color.offWhite}/>
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => { setType('Protein')}}>
                         <View style={[styles.icon, type === 'Protein' ? { backgroundColor: color.four } : undefined]}>
-                            <MaterialIcons name={'set-meal'} size={30} color={type === 'Protein' ? color.white : color.offWhite}/>
+                            <MaterialIcons name={'set-meal'} size={23} color={type === 'Protein' ? color.white : color.offWhite}/>
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => { setType('Fat')}}>
                         <View style={[styles.icon, type === 'Fat' ? { backgroundColor: color.four } : undefined]}>
-                            <MaterialIcons name={'fastfood'} size={30} color={type === 'Fat' ? color.white : color.offWhite}/>
+                            <MaterialIcons name={'fastfood'} size={23} color={type === 'Fat' ? color.white : color.offWhite}/>
                         </View>
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => { setType('Carbohydrates')}}>
                         <View style={[styles.iconRight, type === 'Carbohydrates' ? { backgroundColor: color.four } : undefined]}>
-                            <MaterialIcons name={'rice-bowl'} size={30} color={type === 'Carbohydrates' ? color.white : color.offWhite}/>
+                            <MaterialIcons name={'rice-bowl'} size={23} color={type === 'Carbohydrates' ? color.white : color.offWhite}/>
                         </View>
                     </TouchableOpacity>
 

@@ -29,7 +29,7 @@ const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, 
 
   useEffect(() => {
     if (isFocused)
-      getUserToken()
+      // getUserToken()
       getIntake()
       getMacros()
   }, [isFocused])
@@ -57,19 +57,19 @@ const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, 
       })
   }
 
-  const getUserToken = () => {
-    mealApiService.getUserToken('daan.schaer@gmail.com', '12345')
-        .then( token => {
-          storage.storeUserToken(token)
-              .then()
-              .catch(error => console.warn(error))
-        })
-        .catch(error => {
-          console.log(error);
-          setCantLoad(true);
-        })
-
-  }
+  // const getUserToken = () => {
+  //   mealApiService.login('daan.schaer@gmail.com', '12345')
+  //       .then( token => {
+  //         storage.storeUserToken(token)
+  //             .then()
+  //             .catch(error => console.warn(error))
+  //       })
+  //       .catch(error => {
+  //         console.log(error);
+  //         setCantLoad(true);
+  //       })
+  //
+  // }
 
   return (
       isLoading ? <ActivityIndicator color={color.primary} size={40} style={{marginTop: 250}}/> :
@@ -118,7 +118,7 @@ const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, 
           {
             intakes.length === 0 ?
                 <View style={styles.emptyContainer}>
-                  <Text style={styles.emptyTitle}>Start tracking your meals today</Text>
+                  <Text style={styles.emptyTitle}>Start tracking your meals </Text>
                   <Feather style={{marginTop: 30,}} name={'arrow-down'} size={25} color={color.primary}/>
                 </View>
                 :
