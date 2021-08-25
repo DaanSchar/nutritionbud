@@ -6,6 +6,7 @@ import SplashScreen from "../components/splashscreen/SplashScreen";
 import TabNavStack from "./TabNavStack";
 import {color} from "../../assets/color/color";
 import {Startup} from "../components/splashscreen/Startup";
+import TabNav from "../components/navigation/tabnav/TabNav";
 
 const Stack = createStackNavigator();
 
@@ -26,7 +27,7 @@ const SplashStack = () => {
             <Stack.Screen name={'SplashScreen'} component={SplashScreen}/>
             <Stack.Screen name={'Login'} component={Login} />
             <Stack.Screen name={'Register'} component={Register}/>
-            <Stack.Screen name={'Home'} component={TabNavStack}/>
+            <Stack.Screen name={'Home'} component={TabNav}/>
         </Stack.Navigator>
     )
 }
