@@ -5,7 +5,7 @@ import {
   SafeAreaView,
   StatusBar,
   ScrollView,
-  TouchableOpacity, FlatList, ActivityIndicator,
+  TouchableOpacity, FlatList, ActivityIndicator, BackHandler,
 } from "react-native";
 import React, {useEffect, useState} from 'react';
 import { color } from "../../../../assets/color/color";
@@ -34,6 +34,17 @@ const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, 
       getMacros()
   }, [isFocused])
 
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () =>
+        BackHandler.removeEventListener("hardwareBackPress", backAction);
+  }, [])
+
+  const backAction = () => {
+    return true
+  }
+
   const getIntake = () => {
     mealApiService.getIntakeToday()
         .then(r => {
@@ -57,20 +68,6 @@ const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, 
       })
   }
 
-  // const getUserToken = () => {
-  //   mealApiService.login('daan.schaer@gmail.com', '12345')
-  //       .then( token => {
-  //         storage.storeUserToken(token)
-  //             .then()
-  //             .catch(error => console.warn(error))
-  //       })
-  //       .catch(error => {
-  //         console.log(error);
-  //         setCantLoad(true);
-  //       })
-  //
-  // }
-
   return (
       isLoading ? <ActivityIndicator color={color.primary} size={40} style={{marginTop: 250}}/> :
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -82,7 +79,8 @@ const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, 
           colors={[color.primary, color.two]}
           start={{ x: 0, y: 0 }}
           end={{ x: 3, y: 0 }}
-          style={styles.topContainer}>
+          style={styles.topContainer}
+      >
 
         <View style={styles.topContent}>
 

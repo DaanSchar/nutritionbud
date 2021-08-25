@@ -107,7 +107,7 @@ export const login = async(username, password) => {
         .catch( (error) => console.warn(error));
 }
 
-export const register = async(email, password, firstName, lastName) => {
+export const register = (email, password, firstName, lastName) => {
 
     let body = {
         email: email.toLowerCase(),
@@ -124,5 +124,17 @@ export const register = async(email, password, firstName, lastName) => {
             return response
         })
         .catch(error => console.log(error))
+}
 
+export const verifyToken = async () => {
+    let headers = new Headers({'x-access-token': await storage.getUserToken()})
+
+    return fetch(url + '/users/login/verify', { headers: headers})
+        .then(response => {
+            if (response.ok)
+                return true;
+            else
+                return false;
+        })
+        .catch(error => console.warn(error))
 }

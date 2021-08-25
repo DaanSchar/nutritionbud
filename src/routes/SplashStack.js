@@ -5,6 +5,7 @@ import Register from "../components/splashscreen/Register";
 import SplashScreen from "../components/splashscreen/SplashScreen";
 import TabNavStack from "./TabNavStack";
 import {color} from "../../assets/color/color";
+import {Startup} from "../components/splashscreen/Startup";
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ const SplashStack = () => {
             }}
             animation={'fade'}
         >
+            <Stack.Screen name={'Startup'} component={Startup}/>
             <Stack.Screen name={'SplashScreen'} component={SplashScreen}/>
             <Stack.Screen name={'Login'} component={Login} />
             <Stack.Screen name={'Register'} component={Register}/>
