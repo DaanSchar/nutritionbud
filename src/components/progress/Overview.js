@@ -1,16 +1,12 @@
 import {Text, View, StyleSheet, StatusBar, ScrollView, FlatList, ActivityIndicator} from "react-native";
 import React, {useEffect, useState} from 'react';
 import {color} from "../../../assets/color/color";
-import Chart from "./components/Chart";
 import LinearGradient from "react-native-linear-gradient";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import * as mealApiService from "../../services/mealApiService";
+import * as mealApiService from "../../services/api/mealApiService";
 import ChartCard from "./components/ChartCard";
 import {useIsFocused} from "@react-navigation/native";
 
 const Overview = () => {
-
-    // TODO decrease size of graph buttons
 
     const isFocused = useIsFocused()
     let colors = [color.primary, color.three]

@@ -13,7 +13,7 @@ import LinearGradient from "react-native-linear-gradient";
 import NutritionCard from "./components/NutritionCard";
 import SwipeableMealCard from "./components/SwipeableMealCard";
 import { connect } from "react-redux";
-import * as mealApiService from "../../../services/mealApiService";
+import * as mealApiService from "../../../services/api/mealApiService";
 import {useIsFocused} from "@react-navigation/native";
 import * as currentIntakeActions from "../../../store/meals/currentIntakeActions";
 import * as storage from "../../../services/storage";

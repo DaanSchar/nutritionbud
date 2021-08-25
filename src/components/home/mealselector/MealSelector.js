@@ -15,7 +15,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Menu from "./components/Menu";
 import MealCard from "./components/MealCard";
 import {connect} from "react-redux";
-import * as mealApiService from "../../../services/mealApiService";
+import * as mealApiService from "../../../services/api/mealApiService";
 import LinearGradient from "react-native-linear-gradient";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 

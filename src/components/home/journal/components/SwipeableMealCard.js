@@ -6,7 +6,7 @@ import MealCard from "../../mealselector/components/MealCard";
 import Feather from "react-native-vector-icons/Feather";
 import { connect } from "react-redux";
 import * as currentIntakeActions from "../../../../store/meals/currentIntakeActions";
-import * as mealApiService from "../../../../services/mealApiService";
+import * as mealApiService from "../../../../services/api/mealApiService";
 
 const SwipeableMealCard = ({ item, deleteMeal }) => {
 

@@ -1,11 +1,8 @@
 import * as API from "./API";
 import base64 from "react-native-base64";
-import * as storage from "./storage";
+import * as storage from "../storage";
 
 const url = API.baseUrl;
-
-//TODO make this service take care of more things: for example: return an object with all info {message: 'message', status: 201}
-
 
 export const getAllMeals = () => {
     return fetch(url + '/meals')
@@ -101,8 +98,8 @@ export const login = async(username, password) => {
     headers.set('Authorization', 'Basic ' + base64.encode(username.toLowerCase() + ":" + password));
 
     return fetch(url + '/users/login',{ headers: headers })
-        .then( (response) => {
-            return response
+        .then( async (response) => {
+            return await response.json()
         })
         .catch( (error) => console.warn(error));
 }
@@ -120,8 +117,11 @@ export const register = (email, password, firstName, lastName) => {
         method: 'POST',
         headers: { 'Content-Type': 'application/json'},
         body: JSON.stringify(body)})
-        .then(response => {
-            return response
+        .then(async response => {
+            return {
+                ok: await response.ok,
+                json: await response.json(),
+            }
         })
         .catch(error => console.log(error))
 }

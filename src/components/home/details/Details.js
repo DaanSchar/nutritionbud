@@ -17,7 +17,7 @@ import NutritionCard from "./components/NutritionCard";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { personalData } from "../../../../assets/data/personalData";
 import * as currentIntakeActions from "../../../store/meals/currentIntakeActions";
-import * as mealApiService from "../../../services/mealApiService";
+import * as mealApiService from "../../../services/api/mealApiService";
 
 
 const Details = ({ navigation, route, addIntake }) => {

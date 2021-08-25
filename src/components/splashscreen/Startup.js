@@ -2,7 +2,7 @@ import LinearGradient from "react-native-linear-gradient";
 import {color} from "../../../assets/color/color";
 import {StatusBar, StyleSheet, Text} from "react-native";
 import React, {useEffect, useState} from "react";
-import {verifyToken} from "../../services/mealApiService";
+import {verifyToken} from "../../services/api/mealApiService";
 
 
 export const Startup = ({ navigation }) => {
@@ -11,7 +11,7 @@ export const Startup = ({ navigation }) => {
         hasValidToken()
     },[])
 
-    const hasValidToken = async () => {
+    const hasValidToken = () => {
         return verifyToken().then( r => {
             r ? navigation.navigate('Home') : navigation.navigate('SplashScreen')
         })
