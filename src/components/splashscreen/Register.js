@@ -13,8 +13,8 @@ import LinearGradient from "react-native-linear-gradient";
 import {color} from "../../../assets/color/color";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Feather from "react-native-vector-icons/Feather";
-import * as mealApiService from "../../services/api/mealApiService";
 import * as storage from "../../services/storage";
+import * as userApiService from "../../services/api/userApiService";
 
 const Register = ({ navigation }) => {
 
@@ -32,7 +32,7 @@ const Register = ({ navigation }) => {
     const onRegister = () => {
         setLoading(true)
         if (password === rePass)
-            mealApiService.register(email, password, firstName, lastName)
+            userApiService.register(email, password, firstName, lastName)
                 .then(response => handleResponse(response))
         else
             setError({message: 'Passwords are not the same'})
@@ -47,7 +47,7 @@ const Register = ({ navigation }) => {
     }
 
     const login = () => {
-        mealApiService.login(email, password)
+        userApiService.login(email, password)
             .then(response => storage.storeUserToken(response.token.toString()))
             .then(navigation.navigate('Home'))
     }

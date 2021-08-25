@@ -5,6 +5,7 @@ import LinearGradient from "react-native-linear-gradient";
 import * as mealApiService from "../../services/api/mealApiService";
 import ChartCard from "./components/ChartCard";
 import {useIsFocused} from "@react-navigation/native";
+import * as intakeApiService from "../../services/api/intakeApiService";
 
 const Overview = () => {
 
@@ -15,7 +16,7 @@ const Overview = () => {
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
-        mealApiService.getMacros()
+        intakeApiService.getMacros()
             .then(data => {
                 setData([...data])
             })
