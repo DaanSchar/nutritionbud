@@ -13,8 +13,8 @@ import LinearGradient from "react-native-linear-gradient";
 import {color} from "../../../assets/color/color";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Feather from "react-native-vector-icons/Feather";
-import * as mealApiService from "../../services/mealApiService";
 import * as storage from "../../services/storage";
+import * as userApiService from "../../services/api/userApiService";
 
 const Register = ({ navigation }) => {
 
@@ -30,31 +30,27 @@ const Register = ({ navigation }) => {
     const [error, setError] = useState({message: ''})
 
     const onRegister = () => {
-        if (password === rePass) {
-            setLoading(true)
-            registerRequest()
-        } else {
+        setLoading(true)
+        if (password === rePass)
+            userApiService.register(email, password, firstName, lastName)
+                .then(response => handleResponse(response))
+        else
             setError({message: 'Passwords are not the same'})
-        }
     }
 
-    const registerRequest = () => {
-        mealApiService.register(email, password, firstName, lastName)
-            .then(async response => {
-                if (response.ok)
-                    await mealApiService.login(email, password)
-                        .then(async response => storeUserToken(await response.json()))
-                else
-                    setError(await response.json())
-                setLoading(false)
-            })
+    const handleResponse = (response) => {
+        if (response.ok)
+            login()
+        else
+            setError(response.json)
+        setLoading(false)
     }
 
-    const storeUserToken = (body) => {
-        storage.storeUserToken(body.token.toString())
+    const login = () => {
+        userApiService.login(email, password)
+            .then(response => storage.storeUserToken(response.token.toString()))
             .then(navigation.navigate('Home'))
     }
-
 
     return (
         <ScrollView contentContainerStyle={{flex: 1,}}>

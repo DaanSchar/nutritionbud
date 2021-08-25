@@ -17,7 +17,7 @@ import NutritionCard from "./components/NutritionCard";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { personalData } from "../../../../assets/data/personalData";
 import * as currentIntakeActions from "../../../store/meals/currentIntakeActions";
-import * as mealApiService from "../../../services/mealApiService";
+import * as intakeApiService from "../../../services/api/intakeApiService";
 
 
 const Details = ({ navigation, route, addIntake }) => {
@@ -58,7 +58,7 @@ const Details = ({ navigation, route, addIntake }) => {
   }
 
   const addMealToIntake = async(meal, portionSize) => {
-    return await mealApiService.addMealToIntake(meal, portionSize)
+    return await intakeApiService.addMealToIntake(meal, portionSize).then(r => console.log(r))
   }
 
   return (

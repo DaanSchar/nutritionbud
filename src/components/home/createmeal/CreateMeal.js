@@ -9,7 +9,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import LinearGradient from "react-native-linear-gradient";
 import {connect} from "react-redux";
 import * as mealActions from "../../../store/meals/mealActions";
-import * as mealApiService from "../../../services/mealApiService";
+import * as mealApiService from "../../../services/api/mealApiService";
 
 
 const CreateMeal = ({ navigation, route, createMeal}) => {

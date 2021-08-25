@@ -14,8 +14,8 @@ import Feather from "react-native-vector-icons/Feather";
 import LinearGradient from "react-native-linear-gradient";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import * as mealApiService from "../../services/mealApiService";
 import * as storage from "../../services/storage";
+import * as userApiService from "../../services/api/userApiService";
 
 const Login = ({ navigation }) => {
 
@@ -27,23 +27,20 @@ const Login = ({ navigation }) => {
 
     const onLogin = () => {
         setLoading(true)
-        loginRequest()
-    }
 
-    const loginRequest = () => {
-        mealApiService.login(email, password)
-            .then(async response => {
-                if (response.ok)
-                    await response.json().then(body => storeUserToken(body))
-                else
-                    setError(await response.json())
+        userApiService.login(email, password)
+            .then(response => {
+                handleResponse(response)
                 setLoading(false)
             })
     }
 
-    const storeUserToken = (body) => {
-        storage.storeUserToken(body.token.toString())
-            .then(navigation.navigate('Home'))
+    const handleResponse = (response) => {
+        if (response.token)
+            storage.storeUserToken(response.token.toString())
+                .then(navigation.navigate('Home'))
+        else
+            setError(response)
     }
 
     return (

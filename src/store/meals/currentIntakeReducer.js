@@ -1,4 +1,4 @@
-import * as mealApiService from "../../services/mealApiService";
+import * as mealApiService from "../../services/api/mealApiService";
 
 const initialState = {
   macros: {
