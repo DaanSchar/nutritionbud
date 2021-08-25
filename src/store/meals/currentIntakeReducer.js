@@ -1,3 +1,5 @@
+import * as mealApiService from "../../services/mealApiService";
+
 const initialState = {
   macros: {
     totalCalories: 0,
@@ -5,15 +7,15 @@ const initialState = {
     totalFat: 0,
     totalCarbohydrates: 0,
   },
-  meals: []
+  intakes: []
 }
 
 export const currentIntakeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'ADD_MEAL':
-      return addMeal(state, action);
-    case 'DELETE_MEAL':
-      return deleteMeal(state, action);
+    case 'ADD_INTAKE':
+      return addIntake(state, action);
+    case 'DELETE_INTAKE':
+      return deleteIntake(state, action);
     case 'SET_MEALS':
       return setMeals(state, action);
     case 'SET_MACROS':
@@ -24,7 +26,6 @@ export const currentIntakeReducer = (state = initialState, action) => {
 
 function setMacros(state, action) {
   let macros = action.data
-  console.log(macros)
 
 
   return {
@@ -37,56 +38,44 @@ function setMacros(state, action) {
 function setMeals(state, action) {
   return {
     ...state,
-    meals: [...action.data]
+    intakes: [...action.data]
   }
 }
 
-function addMeal(state, action) {
-  let meals = [...state.meals];
-  let newMeal = {portionSize: action.portionSize, meal: action.meal}
+function addIntake(state, action) {
+  let intakes = [...state.intakes];
+  let intake = {portionSize: action.portionSize, meal: action.meal}
 
-  let randomId = generateId(10000)
+  intakes = [...intakes, intake];
 
-  while (!idExist(state, randomId)) {
-    randomId = generateId(1000);
+  let macros = {
+    totalCalories: state.macros.totalCalories + intake.meal.calories * intake.portionSize,
+    totalProtein: state.macros.totalProtein + intake.meal.protein * intake.portionSize,
+    totalFat: state.macros.totalFat + intake.meal.fat * intake.portionSize,
+    totalCarbohydrates: state.macros.totalCarbohydrates + intake.meal.carbohydrates * intake.portionSize,
   }
-  newMeal.id = randomId.toString();
-
-  meals = [...meals, newMeal];
 
   return {
     ...state,
-    meals: meals,
+    macros: macros,
+    intakes: intakes,
   }
 }
 
-function generateId(max) {
-  return Math.floor(Math.random() * max);
-}
-
-function idExist(state, id) {
-  for (let i = 0; i < state.meals.length; i++)
-    if (state.meals[i].id === id)
-      return false;
-  return true
-}
-
-
-function deleteMeal(state, action) {
+function deleteIntake(state, action) {
 
   let mealIndex;
 
-  console.log(action.meal)
 
-  for (let i = 0; i < state.meals.length; i++) {
-    if (mealsAreTheSame(state.meals[i], action.meal)) {
+  for (let i = 0; i < state.intakes.length; i++) {
+    if (intakesAreTheSame(state.intakes[i], action.meal)) {
       mealIndex = i;
       break;
     }
   }
 
-  let meal = state.meals[mealIndex];
-  state.meals.splice(mealIndex, 1)
+  let meal = state.intakes[mealIndex];
+  state.intakes.splice(mealIndex, 1)
 
   let macros = {
     totalCalories: state.macros.totalCalories - meal.meal.calories * meal.portionSize,
@@ -98,13 +87,13 @@ function deleteMeal(state, action) {
   return {
     ...state,
     macros: {...macros },
-    meals: [...state.meals],
+    intakes: [...state.intakes],
   }
 
   return state;
 }
 
-function mealsAreTheSame(mealA, mealB) {
+function intakesAreTheSame(mealA, mealB) {
   if (mealA.meal.id === mealB.meal.id)
     if (mealA.portionSize === mealB.portionSize)
       if (mealA.date === mealB.date)

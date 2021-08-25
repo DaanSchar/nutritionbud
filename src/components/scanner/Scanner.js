@@ -9,12 +9,13 @@ import LinearGradient from "react-native-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import TopMenu from "../TopMenu";
 import Feather from "react-native-vector-icons/Feather";
+import * as mealApiService from "../../services/mealApiService";
+import {useIsFocused} from "@react-navigation/native";
 
-const Scanner = ({ meals, navigation, scan, findMeal }) => {
+const Scanner = ({ navigation }) => {
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [text, setText] = useState('not scanned yet');
 
   const {width, height} = Dimensions.get('window');
 
@@ -26,8 +27,10 @@ const Scanner = ({ meals, navigation, scan, findMeal }) => {
   }
 
   useEffect(() => {
+    setScanned(false)
     askForCameraPermission()
   }, []);
+
 
   if (hasPermission === null) {
     return (
@@ -45,29 +48,24 @@ const Scanner = ({ meals, navigation, scan, findMeal }) => {
     )
   }
 
-  const handleBarCodeScanned = ({type, data}) => {
-    setScanned(true);
-    setText(data);
-    scan(data)
 
-    let item = findMeal(data);
+  const handleBarCodeScanned = async ({type, data}) => {
+    setScanned(true)
     let id = data;
+    console.log(scanned)
 
-    if (!(item === null))
-      navigation.navigate('Details', { item })
-    else
-      navigation.navigate('CreateMeal', { id })
+
+    navigation.navigate('Loading')
+
+    await mealApiService.getMealById(id).then(item => {
+      if (item) {
+        console.log(item)
+        navigation.navigate('Details', {item})
+    } else {
+      console.log('we didnt found m')
+      navigation.navigate('CreateMeal', {id})
+    }})
   }
-
-  function findMeal(id) {
-    for (let i = 0; i < meals.length; i++) {
-      if (meals[i].id === id) {
-        return meals[i];
-      }
-    }
-    return null;
-  }
-
 
   return (
     <View style={{ flex: 1,}}>
@@ -93,29 +91,19 @@ const Scanner = ({ meals, navigation, scan, findMeal }) => {
         />
       </View>
 
-      <LinearGradient colors={[color.three, color.two]} style={styles.bottomBox}>
-        <Text style={styles.mainText}>{text}</Text>
-        {scanned && <Button title={'scan again?'} onPress={() => setScanned(false)} color={'tomato'}/>}
-      </LinearGradient>
+      <LinearGradient
+          colors={[color.primary, color.four]}
+          style={styles.bottomBox}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 3, y: 0 }}
+      />
 
     </View>
   )
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  navigation: ownProps.navigation,
-  meals: state.meals,
-})
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    dispatch,
-    scan: (data) => dispatch(ScannerActions.scan(data)),
-    findMeal: (id) => dispatch(mealActions.findById(id)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Scanner);
+export default Scanner;
 
 const styles = StyleSheet.create({
   container: {

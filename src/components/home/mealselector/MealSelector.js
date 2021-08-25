@@ -7,15 +7,15 @@ import {
     TouchableOpacity,
     TextInput,
     FlatList,
-    ScrollView, ActivityIndicator
+    ScrollView, ActivityIndicator, BackHandler
 } from "react-native";
 import React, {useEffect, useState} from 'react';
-import { color } from "../../../assets/color/color";
+import { color } from "../../../../assets/color/color";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import Menu from "./components/Menu";
 import MealCard from "./components/MealCard";
 import {connect} from "react-redux";
-import * as mealApiService from "../../services/mealApiService";
+import * as mealApiService from "../../../services/mealApiService";
 import LinearGradient from "react-native-linear-gradient";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
@@ -25,16 +25,30 @@ const MealSelector = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [cantLoad, setCantLoad] = useState(false);
   const [data, setData] = useState([]);
+  const [text, setText] = useState('');
 
-    useEffect(() => {
-        mealApiService.getAllMeals().then(r => {
-            setData([...r]);
-            setIsLoading(false)
-        }).catch(error => {
-            console.log(error);
-            setCantLoad(true);
-        })
-    }, [])
+  useEffect(() => {
+    mealApiService.getAllMeals().then(r => {
+        setData([...r]);
+        setIsLoading(false)
+    }).catch(error => {
+        console.log(error);
+        setCantLoad(true);
+    })
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () =>
+        BackHandler.removeEventListener("hardwareBackPress", backAction);
+  }, [])
+
+  const backAction = () => {
+    navigation.navigate('Home')
+    return true
+  }
+
+  const sortData = () => {
+      return data.filter(item => item.name.toLowerCase().includes(text.toLowerCase()))
+  }
 
   const renderItem = ({ item }) => {
     return (
@@ -64,28 +78,30 @@ const MealSelector = ({ navigation }) => {
     <View style={{ flex: 1, backgroundColor: "white"}}>
       <StatusBar translucent={true} backgroundColor={'transparent'} />
 
-      <Menu navigation={navigation}/>
+      <Menu navigation={navigation} destination={'Home'}/>
 
       <View style={styles.search}>
         <View style={styles.searchBarContainer}>
           <MaterialIcons style={{marginLeft: 15,}} name={'search'} color={'grey'} size={25}/>
-          <TextInput placeholder={'find a meal'} fontSize={17}></TextInput>
+          <TextInput style={{flex: 1,}}placeholder={'find a meal'} fontSize={17} onChangeText={text => setText(text)}></TextInput>
         </View>
       </View>
 
       <View style={styles.content}>
           {
-              isLoading && !cantLoad? <ActivityIndicator color={color.primary} size={40} style={{marginTop: 250}}/> :
+              isLoading && !cantLoad? <ActivityIndicator color={color.primary} size={40} style={{marginTop: 250}}/>
+                  :
               <FlatList
-              data={data}
-              keyExtractor={item => item.id}
+              data={sortData()}
+              keyExtractor={item => item.id.toString()}
               renderItem={renderItem}/>
           }
           {
-              cantLoad ? <View style={styles.errorContainer}>
-                  <Text style={styles.errorText}>Unable to load meals.</Text>
-                  <Text style={styles.errorText}>Please try again later</Text>
-              </View> : null
+              cantLoad ?
+                  <View style={styles.errorContainer}>
+                      <Text style={styles.errorText}>Unable to load meals.</Text>
+                      <Text style={styles.errorText}>Please try again later</Text>
+                  </View> : null
           }
       </View>
     </View>
@@ -103,14 +119,15 @@ export default connect(mapStateToProps)(MealSelector)
 
 const styles = StyleSheet.create({
     search: {
-        backgroundColor: color.three,
+        backgroundColor: color.primary,
         paddingBottom: 15,
+        width: '100%',
     },
     searchBarContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: color.white,
-        borderRadius: 20,
+        borderRadius: 30,
         marginHorizontal: 10,
     },
     cardContainer: {

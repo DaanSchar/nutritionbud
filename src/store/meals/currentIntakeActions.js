@@ -1,9 +1,9 @@
-export const addMeal = (meal, portionSize) => {
-  return { type: 'ADD_MEAL', meal: meal, portionSize: portionSize}
+export const addIntake = (meal, portionSize) => {
+  return { type: 'ADD_INTAKE', meal: meal, portionSize: portionSize}
 }
 
-export const deleteMeal = (meal) => {
-  return { type: 'DELETE_MEAL', meal: meal}
+export const deleteIntake = (meal) => {
+  return { type: 'DELETE_INTAKE', meal: meal}
 }
 
 export const setMeals = (data) => {

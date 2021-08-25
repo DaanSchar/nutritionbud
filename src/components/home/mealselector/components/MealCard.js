@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet } from "react-native";
-import { color } from "../../../../assets/color/color";
+import { color } from "../../../../../assets/color/color";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import React from "react";
 import LinearGradient from "react-native-linear-gradient";
@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     color: color.two,
     fontSize: 22,
+    width: 180,
   },
   nutContainer: {
     flexDirection: 'row',

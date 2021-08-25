@@ -8,11 +8,12 @@ const TopMenu = ({ children }) => {
     <View>
       <StatusBar translucent={true} backgroundColor={'transparent'} />
       <LinearGradient
-          colors={[color.primary, color.three]}
-          style={styles.topMenu}>
-
+          colors={[color.primary, color.four]}
+          style={styles.topMenu}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 3, y: 0 }}
+      >
         { children }
-
       </LinearGradient>
     </View>
   )

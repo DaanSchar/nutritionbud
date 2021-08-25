@@ -1,6 +1,6 @@
 import { Text, View, StyleSheet } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import { color } from "../../../../assets/color/color";
+import { color } from "../../../../../assets/color/color";
 import React from "react";
 import ProgressCircle from "react-native-progress-circle";
 import LinearGradient from "react-native-linear-gradient";
@@ -39,10 +39,10 @@ const NutritionCard = ({ type, total, icon, percentage}) => {
           radius={50}
           borderWidth={8}
           color={color.primary}
-          shadowColor={'#ffe2e0'}
-          bgColor={colors[1]}
+          shadowColor={color.grey}
+          bgColor={color.white}
         >
-          <Text style={[styles.cardText,  type === 'Calories' ? {marginLeft: 20} : {}]}>{ total } {type === 'Calories' ? 'kcal' : 'g'}</Text>
+          <Text style={[styles.cardText, ]}>{ total } {type === 'Calories' ? '' : 'g'}</Text>
           <Text style={styles.cardExtraText}>{percentage}%</Text>
         </ProgressCircle>
       </View>
@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
   },
   typeContainer: { flexDirection: 'row',
     marginTop: 20,
+    marginLeft: 10,
     alignItems: 'center',
-    alignSelf: 'center',
   },
   totalContainer: {
     justifyContent: 'center',
@@ -73,14 +73,15 @@ const styles = StyleSheet.create({
 
   // text
   cardTitle: {
-    fontFamily: 'Roboto-SemiBold',
+    fontFamily: 'Roboto-Regular',
     color: color.white,
-    fontSize: 28,
+    fontSize: 22,
   },
   cardText: {
-    fontFamily: 'Roboto-Black',
+    fontFamily: 'Roboto-Light',
+    textAlign: 'center',
     color: color.one,
-    fontSize: 23,
+    fontSize: 24,
   },
   cardExtraText: {
     fontFamily: 'Roboto-Regular',

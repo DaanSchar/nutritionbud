@@ -1,16 +1,14 @@
 import { Text, View, StyleSheet, TouchableOpacity, Animated} from "react-native";
-import { color } from "../../../../assets/color/color";
+import { color } from "../../../../../assets/color/color";
 import { Swipeable } from "react-native-gesture-handler";
 import React from "react";
-import MealCard from "../../addmeal/components/MealCard";
+import MealCard from "../../mealselector/components/MealCard";
 import Feather from "react-native-vector-icons/Feather";
 import { connect } from "react-redux";
-import * as currentIntakeActions from "../../../store/meals/currentIntakeActions";
-import * as mealApiService from "../../../services/mealApiService";
+import * as currentIntakeActions from "../../../../store/meals/currentIntakeActions";
+import * as mealApiService from "../../../../services/mealApiService";
 
 const SwipeableMealCard = ({ item, deleteMeal }) => {
-
-  const userId = '11'
 
   const leftSwipe = (progress, dragX) => {
     const scale = dragX.interpolate({
@@ -22,6 +20,7 @@ const SwipeableMealCard = ({ item, deleteMeal }) => {
       deleteMeal(item)
       mealApiService.deleteIntake(item).then(r => console.log(r))
     }
+
 
     return (
       <View style={styles.deleteBox}>
@@ -44,7 +43,7 @@ const SwipeableMealCard = ({ item, deleteMeal }) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatch,
-    deleteMeal: (id) => dispatch(currentIntakeActions.deleteMeal(id))
+    deleteMeal: (id) => dispatch(currentIntakeActions.deleteIntake(id))
   }
 }
 
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   circle: {
-    backgroundColor: 'red',
+    backgroundColor: color.primary,
     borderRadius: 200,
     padding: 8,
     marginLeft: 10,

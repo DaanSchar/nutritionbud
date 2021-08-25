@@ -5,51 +5,67 @@ import {
   SafeAreaView,
   StatusBar,
   ScrollView,
-  TouchableOpacity, FlatList, ActivityIndicator,
+  TouchableOpacity, FlatList, ActivityIndicator, BackHandler,
 } from "react-native";
 import React, {useEffect, useState} from 'react';
-import { color } from "../../../assets/color/color";
+import { color } from "../../../../assets/color/color";
 import LinearGradient from "react-native-linear-gradient";
 import NutritionCard from "./components/NutritionCard";
 import SwipeableMealCard from "./components/SwipeableMealCard";
 import { connect } from "react-redux";
-import * as mealApiService from "../../services/mealApiService";
+import * as mealApiService from "../../../services/mealApiService";
 import {useIsFocused} from "@react-navigation/native";
-import * as currentIntakeActions from "../../store/meals/currentIntakeActions";
-import {getMacros} from "../../services/mealApiService";
+import * as currentIntakeActions from "../../../store/meals/currentIntakeActions";
+import * as storage from "../../../services/storage";
+import MoreCard from "./components/MoreCard";
+import Feather from "react-native-vector-icons/Feather";
 
 
-const Overview = ({ navigation, meals, setMacros, totalCalories, totalProtein, totalFat, totalCarbohydrates, setMeals}) => {
+const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, totalFat, totalCarbohydrates, setMeals}) => {
 
   const [isLoading, setLoading] = useState(true);
   const [cantLoad, setCantLoad] = useState(false);
   const isFocused = useIsFocused()
-  const userId = '1'
-  const id = '2222'
 
   useEffect(() => {
     if (isFocused)
+      // getUserToken()
       getIntake()
       getMacros()
   }, [isFocused])
 
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", backAction);
+
+    return () =>
+        BackHandler.removeEventListener("hardwareBackPress", backAction);
+  }, [])
+
+  const backAction = () => {
+    return true
+  }
+
   const getIntake = () => {
-    mealApiService.getIntakeToday().then(r => {
-      setMeals([...r]);
-    }).catch(error => {
-      console.log(error);
-      setCantLoad(true);
-    })
+    mealApiService.getIntakeToday()
+        .then(r => {
+          setMeals([...r]);
+      })
+        .catch(error => {
+          console.log(error);
+          setCantLoad(true);
+      })
   }
 
   const getMacros = () => {
-    mealApiService.getMacros(userId).then(r => {
-      setMacros(r)
-      setLoading(false)
-    }).catch(error => {
-      console.log(error);
-      setCantLoad(true);
-    })
+    mealApiService.getMacrosToday()
+        .then(r => {
+          setMacros(r)
+          setLoading(false)
+      })
+        .catch(error => {
+          console.log(error);
+          setCantLoad(true);
+      })
   }
 
   return (
@@ -59,43 +75,52 @@ const Overview = ({ navigation, meals, setMacros, totalCalories, totalProtein, t
     {/* Menu */}
     <StatusBar translucent={true} backgroundColor={'transparent'} />
 
-    <LinearGradient
-        colors={[color.primary, color.two]}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 3, y: 0 }}
-        style={styles.topContainer}>
+      <LinearGradient
+          colors={[color.primary, color.two]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 3, y: 0 }}
+          style={styles.topContainer}
+      >
 
-      <View style={styles.topContent}>
+        <View style={styles.topContent}>
 
-        <View style={{}}>
-          <Text style={styles.title}>Today's Total Intake</Text>
-          <Text style={styles.calorieTitle}>{parseInt(totalCalories)} Kcal</Text>
+          <View style={{}}>
+            <Text style={styles.title}>Today's Total Intake</Text>
+            <Text style={styles.calorieTitle}>{parseInt(totalCalories)} Kcal</Text>
+          </View>
+
         </View>
+      </LinearGradient>
 
-      </View>
-    </LinearGradient>
+      {/* Content */}
+      <View style={styles.container}>
 
-    {/* Content */}
-    <View style={styles.container}>
+        {/* Nutrition */}
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          alwaysBounceHorizontal={true}
+          style={styles.cardContainer}
+        >
+          <NutritionCard type={'Protein'} total={parseInt(totalProtein)} index={1}/>
+          <NutritionCard type={'Fat'} total={parseInt(totalFat)} index={2}/>
+          <NutritionCard type={'Carbs'} total={parseInt(totalCarbohydrates)} index={3}/>
+          <MoreCard/>
+        </ScrollView>
 
-      {/* Nutrition */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        alwaysBounceHorizontal={true}
-        style={styles.cardContainer}>
-        <NutritionCard type={'Protein'} total={parseInt(totalProtein)} index={1}/>
-        <NutritionCard type={'Fat'} total={parseInt(totalFat)} index={2}/>
-        <NutritionCard type={'Carbs'} total={parseInt(totalCarbohydrates)} index={3}/>
-      </ScrollView>
+        <View style={styles.bottomContainer}>
 
-      <View style={styles.bottomContainer}>
+          <Text style={styles.bottomTitle}>Today's Meals</Text>
 
-        <Text style={styles.bottomTitle}>Today's Meals</Text>
-
-        <View style={styles.bottomContent}>
+          <View style={styles.bottomContent}>
           {
-            meals.map(item => (
+            intakes.length === 0 ?
+                <View style={styles.emptyContainer}>
+                  <Text style={styles.emptyTitle}>Start tracking your meals </Text>
+                  <Feather style={{marginTop: 30,}} name={'arrow-down'} size={25} color={color.primary}/>
+                </View>
+                :
+                intakes.map(item => (
                 <View key={item.id}>
                   <View style={{flexDirection: 'row', backgroundColor: color.grey, marginHorizontal: 5,}}>
                     <LinearGradient
@@ -124,7 +149,7 @@ const Overview = ({ navigation, meals, setMacros, totalCalories, totalProtein, t
 
 const mapStateToProps = (state, ownProps) => ({
   navigation: ownProps.navigation,
-  meals: state.currentIntake.meals,
+  intakes: state.currentIntake.intakes,
   totalCalories: state.currentIntake.macros.totalCalories,
   totalProtein: state.currentIntake.macros.totalProtein,
   totalFat: state.currentIntake.macros.totalFat,
@@ -139,7 +164,7 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Overview);
+export default connect(mapStateToProps, mapDispatchToProps)(Journal);
 
 const styles = StyleSheet.create({
   container: {
@@ -180,6 +205,11 @@ const styles = StyleSheet.create({
     backgroundColor: color.white,
     marginTop: 10,
   },
+  emptyContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 130
+  },
 
 
   // text
@@ -199,5 +229,10 @@ const styles = StyleSheet.create({
     color: color.two,
     fontSize: 26,
     alignSelf: 'center',
-  }
+  },
+  emptyTitle: {
+    fontFamily: 'Roboto-Light',
+    color: 'grey',
+    fontSize: 16,
+  },
 })

@@ -1,15 +1,15 @@
-import {Text, View, StyleSheet, TouchableOpacity, TextInput, Picker, ScrollView} from "react-native";
-import React, {useState} from 'react';
-import TopMenu from "../TopMenu";
+import {Text, View, StyleSheet, TouchableOpacity, TextInput, Picker, ScrollView, BackHandler} from "react-native";
+import React, {useEffect, useState} from 'react';
+import TopMenu from "../../TopMenu";
 import Feather from "react-native-vector-icons/Feather";
-import {color} from "../../../assets/color/color";
+import {color} from "../../../../assets/color/color";
 import Menu from "./components/Menu";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import DropDownPicker from 'react-native-dropdown-picker';
 import LinearGradient from "react-native-linear-gradient";
 import {connect} from "react-redux";
-import * as mealActions from "../../store/meals/mealActions";
-import * as mealApiService from "../../services/mealApiService";
+import * as mealActions from "../../../store/meals/mealActions";
+import * as mealApiService from "../../../services/mealApiService";
 
 
 const CreateMeal = ({ navigation, route, createMeal}) => {
@@ -28,7 +28,7 @@ const CreateMeal = ({ navigation, route, createMeal}) => {
 
     let meal = {
         name: name,
-        id: id,
+        publicId: id,
         calories: calories,
         fat: fat,
         carbohydrates: carbs,
@@ -37,11 +37,23 @@ const CreateMeal = ({ navigation, route, createMeal}) => {
         portionType: portionType,
     }
 
+    useEffect(() => {
+        BackHandler.addEventListener("hardwareBackPress", backAction);
+
+        return () =>
+            BackHandler.removeEventListener("hardwareBackPress", backAction);
+    }, [])
+
+    const backAction = () => {
+        navigation.navigate('Home')
+        return true
+    }
+
     const onPressCreate = () => {
         if (filledInAll()) {
             createMeal(meal);
             mealApiService.createMeal(meal).then(r => console.log(r))
-            navigation.navigate('AddMeal')
+            navigation.navigate('MealSelector')
         } else {
             setShowFields(true);
         }
@@ -65,7 +77,7 @@ const CreateMeal = ({ navigation, route, createMeal}) => {
 
     return (
         <ScrollView>
-            <Menu navigation={navigation}/>
+            <Menu navigation={navigation} destination={'Home'}/>
 
             <View style={styles.content}>
 
