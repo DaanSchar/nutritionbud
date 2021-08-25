@@ -6,7 +6,8 @@ import MealCard from "../../mealselector/components/MealCard";
 import Feather from "react-native-vector-icons/Feather";
 import { connect } from "react-redux";
 import * as currentIntakeActions from "../../../../store/meals/currentIntakeActions";
-import * as mealApiService from "../../../../services/mealApiService";
+import * as mealApiService from "../../../../services/api/mealApiService";
+import * as intakeApiService from "../../../../services/api/intakeApiService";
 
 const SwipeableMealCard = ({ item, deleteMeal }) => {
 
@@ -18,7 +19,7 @@ const SwipeableMealCard = ({ item, deleteMeal }) => {
 
     const deleteIntake = () => {
       deleteMeal(item)
-      mealApiService.deleteIntake(item).then(r => console.log(r))
+      intakeApiService.deleteIntake(item).then(r => console.log(r))
     }
 
 

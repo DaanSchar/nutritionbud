@@ -5,7 +5,7 @@ import store from "./src/store/store";
 import TabNavStack from "./src/routes/TabNavStack";
 import SplashStack from "./src/routes/SplashStack";
 import {color} from "./assets/color/color";
-import {verifyToken} from "./src/services/mealApiService";
+import {verifyToken} from "./src/services/api/mealApiService";
 import {Text, View, StyleSheet, StatusBar} from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 import {Startup} from "./src/components/splashscreen/Startup";

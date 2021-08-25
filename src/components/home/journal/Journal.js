@@ -13,12 +13,13 @@ import LinearGradient from "react-native-linear-gradient";
 import NutritionCard from "./components/NutritionCard";
 import SwipeableMealCard from "./components/SwipeableMealCard";
 import { connect } from "react-redux";
-import * as mealApiService from "../../../services/mealApiService";
+import * as mealApiService from "../../../services/api/mealApiService";
 import {useIsFocused} from "@react-navigation/native";
 import * as currentIntakeActions from "../../../store/meals/currentIntakeActions";
 import * as storage from "../../../services/storage";
 import MoreCard from "./components/MoreCard";
 import Feather from "react-native-vector-icons/Feather";
+import * as intakeApiService from "../../../services/api/intakeApiService";
 
 
 const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, totalFat, totalCarbohydrates, setMeals}) => {
@@ -46,7 +47,7 @@ const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, 
   }
 
   const getIntake = () => {
-    mealApiService.getIntakeToday()
+    intakeApiService.getIntakeToday()
         .then(r => {
           setMeals([...r]);
       })
@@ -57,7 +58,7 @@ const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, 
   }
 
   const getMacros = () => {
-    mealApiService.getMacrosToday()
+    intakeApiService.getMacrosToday()
         .then(r => {
           setMacros(r)
           setLoading(false)

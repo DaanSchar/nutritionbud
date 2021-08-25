@@ -9,7 +9,7 @@ import LinearGradient from "react-native-linear-gradient";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import TopMenu from "../TopMenu";
 import Feather from "react-native-vector-icons/Feather";
-import * as mealApiService from "../../services/mealApiService";
+import * as mealApiService from "../../services/api/mealApiService";
 import {useIsFocused} from "@react-navigation/native";
 
 const Scanner = ({ navigation }) => {
