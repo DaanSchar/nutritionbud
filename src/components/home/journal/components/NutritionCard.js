@@ -4,9 +4,13 @@ import React from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import LinearGradient from "react-native-linear-gradient";
 
-const NutritionCard = ({ type, total, index}) => {
+const NutritionCard = ({ type, total, index, goal}) => {
 
   let colors = [color.one, color.two]
+  let nutritionGoal = goal[type.toLowerCase()];
+
+  if (type === 'Carbs')
+    nutritionGoal = goal.carbohydrates
 
   if (index === 1)
     colors = [color.primary, color.three]
@@ -14,7 +18,6 @@ const NutritionCard = ({ type, total, index}) => {
     colors = [color.three, color.two]
   if (index === 3)
     colors = [color.one, color.two]
-
 
   return (
       <LinearGradient
@@ -31,7 +34,12 @@ const NutritionCard = ({ type, total, index}) => {
 
       <View style={styles.totalContainer}>
         <Text style={styles.cardText}>{ total } g</Text>
-        <Text style={styles.cardExtraText}>consumed</Text>
+        <Text style={[styles.cardExtraText, { fontFamily: 'Roboto-Light' , fontSize: 15}]}>
+          {nutritionGoal === null || nutritionGoal == 0 ? '-' : parseInt(total / nutritionGoal * 100) + '%'}
+        </Text>
+        <Text style={styles.cardExtraText}>
+          {nutritionGoal === null ? null : "of today's goal"}
+        </Text>
       </View>
       </LinearGradient>
   )
@@ -50,7 +58,8 @@ const styles = StyleSheet.create({
     elevation: 5,
     marginBottom: 10,
   },
-  typeContainer: { flexDirection: 'row',
+  typeContainer: {
+    flexDirection: 'row',
     marginTop: 5,
     alignItems: 'center',
     marginLeft: 15,
@@ -72,10 +81,11 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     color: color.white,
     fontSize: 23,
+    marginBottom: 5,
   },
   cardExtraText: {
-    fontFamily: 'Roboto-Light',
+    fontFamily: 'Roboto-Thin',
     color: color.grey,
-    fontSize: 14,
+    fontSize: 13,
   },
 })

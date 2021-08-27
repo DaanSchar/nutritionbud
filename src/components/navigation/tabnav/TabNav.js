@@ -6,14 +6,12 @@ import {Text, View, StyleSheet} from "react-native";
 import {color} from "../../../../assets/color/color";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import MealSelector from "../../home/mealselector/MealSelector";
-import AntDesign from "react-native-vector-icons/AntDesign";
 import AddButton from "./components/AddButton";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Feather from "react-native-vector-icons/Feather";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import Icon from "./components/Icon";
 import Profile from "../../profile/Profile";
 import Settings from "../../settings/Settings";
+import ProfileStack from "../../../routes/ProfileStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -59,7 +57,7 @@ const TabNav = ({ navigation }) => {
                 )}
             }/>
 
-            <Tab.Screen name="Profile" component={Profile} options={{
+            <Tab.Screen name="ProfileStack" component={ProfileStack} options={{
                 tabBarIcon: ({focused}) => (
                     <Icon focused={focused} title={'Profile'}>
                         <FontAwesome5 name={'user'} size={25} color={getColor(focused)}/>

@@ -6,6 +6,7 @@ import * as mealApiService from "../../services/api/mealApiService";
 import ChartCard from "./components/ChartCard";
 import {useIsFocused} from "@react-navigation/native";
 import * as intakeApiService from "../../services/api/intakeApiService";
+import * as userApiService from "../../services/api/userApiService";
 
 const Overview = () => {
 
@@ -13,14 +14,15 @@ const Overview = () => {
     let colors = [color.primary, color.three]
 
     const [data, setData] = useState([]);
+    const [goal, setGoal] = useState(null);
     const [isLoading, setLoading] = useState(true)
 
     useEffect(() => {
         intakeApiService.getMacros()
-            .then(data => {
-                setData([...data])
-            })
-            .then(() =>setLoading(false))
+            .then(data => setData([...data]))
+            .then(() => userApiService.getUserGoals()
+                .then(r =>  setGoal(r))
+                .then(r => setLoading(false)))
     }, [isFocused])
 
 
@@ -50,7 +52,7 @@ const Overview = () => {
                 </View>
             </LinearGradient>
             {
-                isLoading ? <ActivityIndicator color={color.primary} size={40} style={{marginTop: 150}}/> : <ChartCard data={data}/>
+                isLoading ? <ActivityIndicator color={color.primary} size={40} style={{marginTop: 150}}/> : <ChartCard data={data} goal={goal}/>
             }
 
         </ScrollView>

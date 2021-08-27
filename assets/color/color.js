@@ -10,6 +10,7 @@ export const color = {
   primary: '#f25c54',
   grey: '#f2f2f2',
   offWhite: '#d9d9d9',
+  textDark: '#403b3b',
 
   tab: '#181F31',
   selected: '#F8F8F8',

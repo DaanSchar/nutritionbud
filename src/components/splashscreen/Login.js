@@ -38,7 +38,7 @@ const Login = ({ navigation }) => {
     const handleResponse = (response) => {
         if (response.token)
             storage.storeUserToken(response.token.toString())
-                .then(navigation.navigate('Home'))
+                .then(navigation.navigate('App'))
         else
             setError(response)
     }

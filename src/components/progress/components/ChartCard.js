@@ -6,7 +6,7 @@ import {color} from "../../../../assets/color/color";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
-const ChartCard = ({ data }) => {
+const ChartCard = ({ data, goal }) => {
 
     let colors = [color.four, color.one]
     const [type, setType] = useState('Calories');
@@ -14,7 +14,7 @@ const ChartCard = ({ data }) => {
     //TODO Play with button colors
 
     return (
-        <TouchableWithoutFeedback onPress={() => setType(type === 'Calories' ? 'Fat' : 'Calories')}>
+        <View>
             <View style={styles.card}>
                 <LinearGradient
                     colors={colors}
@@ -26,7 +26,7 @@ const ChartCard = ({ data }) => {
                         <FontAwesome5 name={'burn'} size={18} color={color.white}/>
                         <Text style={styles.cardTitle}>{type}</Text>
                     </View>
-                    <Chart data={data} type={type}/>
+                    <Chart data={data} type={type} goal={goal}/>
                 </LinearGradient>
                 <View style={styles.cardBottomContainer}>
 
@@ -57,7 +57,7 @@ const ChartCard = ({ data }) => {
 
                 </View>
             </View>
-        </TouchableWithoutFeedback>
+        </View>
     )
 }
 
