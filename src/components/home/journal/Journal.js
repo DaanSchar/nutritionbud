@@ -20,17 +20,19 @@ import * as storage from "../../../services/storage";
 import MoreCard from "./components/MoreCard";
 import Feather from "react-native-vector-icons/Feather";
 import * as intakeApiService from "../../../services/api/intakeApiService";
+import * as userApiService from "../../../services/api/userApiService";
 
 
-const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, totalFat, totalCarbohydrates, setMeals}) => {
+const Journal = ({ intakes, setMacros, totalCalories, totalProtein, totalFat, totalCarbohydrates, setMeals}) => {
 
   const [isLoading, setLoading] = useState(true);
   const [cantLoad, setCantLoad] = useState(false);
+  const [goal, setGoal] = useState(null);
   const isFocused = useIsFocused()
 
   useEffect(() => {
     if (isFocused)
-      // getUserToken()
+      getGoal()
       getIntake()
       getMacros()
   }, [isFocused])
@@ -69,6 +71,12 @@ const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, 
       })
   }
 
+  const getGoal = () => {
+    userApiService.getUserGoals().then(async r => {
+      await setGoal(r)
+    })
+  }
+
   return (
       isLoading ? <ActivityIndicator color={color.primary} size={40} style={{marginTop: 250}}/> :
     <ScrollView showsVerticalScrollIndicator={false}>
@@ -88,6 +96,7 @@ const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, 
           <View style={{}}>
             <Text style={styles.title}>Today's Total Intake</Text>
             <Text style={styles.calorieTitle}>{parseInt(totalCalories)} Kcal</Text>
+            <Text style={styles.titleNote}>{parseInt(totalCalories / goal.calories * 100)}% of today's goal</Text>
           </View>
 
         </View>
@@ -103,9 +112,9 @@ const Journal = ({ navigation, intakes, setMacros, totalCalories, totalProtein, 
           alwaysBounceHorizontal={true}
           style={styles.cardContainer}
         >
-          <NutritionCard type={'Protein'} total={parseInt(totalProtein)} index={1}/>
-          <NutritionCard type={'Fat'} total={parseInt(totalFat)} index={2}/>
-          <NutritionCard type={'Carbs'} total={parseInt(totalCarbohydrates)} index={3}/>
+          <NutritionCard type={'Protein'} total={parseInt(totalProtein)} index={1} goal={goal}/>
+          <NutritionCard type={'Fat'} total={parseInt(totalFat)} index={2} goal={goal}/>
+          <NutritionCard type={'Carbs'} total={parseInt(totalCarbohydrates)} index={3} goal={goal}/>
           <MoreCard/>
         </ScrollView>
 
@@ -234,6 +243,11 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontFamily: 'Roboto-Light',
     color: 'grey',
+    fontSize: 16,
+  },
+  titleNote: {
+    fontFamily: 'Roboto-Thin',
+    color: color.grey,
     fontSize: 16,
   },
 })

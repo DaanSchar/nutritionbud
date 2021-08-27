@@ -27,7 +27,7 @@ const SplashStack = () => {
             <Stack.Screen name={'SplashScreen'} component={SplashScreen}/>
             <Stack.Screen name={'Login'} component={Login} />
             <Stack.Screen name={'Register'} component={Register}/>
-            <Stack.Screen name={'Home'} component={TabNav}/>
+            <Stack.Screen name={'App'} component={TabNavStack}/>
         </Stack.Navigator>
     )
 }

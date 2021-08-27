@@ -13,7 +13,7 @@ export const Startup = ({ navigation }) => {
 
     const hasValidToken = () => {
         return userApiService.verifyToken().then( r => {
-            r ? navigation.navigate('Home') : navigation.navigate('SplashScreen')
+            r ? navigation.navigate('App') : navigation.navigate('SplashScreen')
         })
     }
 

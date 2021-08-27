@@ -49,3 +49,27 @@ export const verifyToken = async () => {
         })
         .catch(error => console.warn(error))
 }
+
+export const getUserGoals = async () => {
+    let headers = new Headers({'x-access-token': await storage.getUserToken()})
+
+    return fetch(url + '/users/goals', { headers: headers})
+        .then( response => {
+            return  response.json()
+        })
+}
+
+export const updateUserGoal = async (goals) => {
+    let headers = new Headers({
+        'x-access-token': await storage.getUserToken(),
+        'Content-Type': 'application/json'
+    })
+
+    return fetch(url + '/users/goals', {
+        headers: headers,
+        method: 'PUT',
+        body: JSON.stringify(goals)})
+        .then(response => {
+            return response.json()
+        })
+}

@@ -49,7 +49,7 @@ const Register = ({ navigation }) => {
     const login = () => {
         userApiService.login(email, password)
             .then(response => storage.storeUserToken(response.token.toString()))
-            .then(navigation.navigate('Home'))
+            .then(navigation.navigate('App'))
     }
 
     return (

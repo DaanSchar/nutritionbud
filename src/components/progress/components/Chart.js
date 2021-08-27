@@ -6,14 +6,7 @@ import {
     VictoryChart,
     VictoryLine, VictoryScatter,
 } from "victory-native";
-const Chart = ({ data, type }) => {
-
-    const goal = {
-        calories: 2000,
-        fat: 60,
-        protein: 50,
-        carbohydrates: 34
-    }
+const Chart = ({ data, type, goal }) => {
 
     const getGoalData = () => {
         let output = []
