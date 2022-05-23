@@ -1,6 +1,20 @@
-# nutritionbud
+# Nutrition Bud
 
-## Screens
+The goal of this app is to offer the user an easy experience in tracking the macro nutrients of their diet. 
+This app was developed using [React native](https://reactnative.dev/) for the front-end and [Flask](https://flask.palletsprojects.com/en/2.1.x/) For the back-end.
+Some implemented features include:
+- Adding items to your daily intake from a list of items.
+- Adding items by scanning the barcode of a product.
+- An overview of the following macro-nutrients:
+  - Calories (not really a macro-nutrient)
+  - Protein
+  - Sugar
+  - Fat
+- A long term overview, where the users statistics get displayed in a graph.
+- Tracking of quantative goals.
+
+
+## Gallery
 
 ### First Launch
 
