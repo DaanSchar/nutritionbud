@@ -13,6 +13,8 @@ Some implemented features include:
 - A long term overview, where the users statistics get displayed in a graph.
 - Tracking of quantative goals.
 
+## Backend
+You can find the backend built using flask [here](https://github.com/DaanSchar/NutritionBudBackend/tree/master).
 
 ## Gallery
 
